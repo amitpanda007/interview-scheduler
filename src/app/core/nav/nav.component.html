@@ -1,0 +1,23 @@
+<!-- Toolbar -->
+<div class="{{ baseClass }}" role="banner">
+  <a href="/"
+    ><img width="40" alt="Angular Logo" src="assets/images/job-interview.png"
+  /></a>
+  <div *ngIf="authenticated" class="spacer">
+    <span>Welcome, {{ auth.name }}</span>
+  </div>
+  <div class="spacer">
+    <a (click)="openInterviews()"><span>interviews</span></a>
+  </div>
+  <div class="spacer"></div>
+
+  <a *ngIf="!authenticated" class="nav-padding" (click)="openLogin()"
+    ><span>Login</span></a
+  >
+  <a *ngIf="!authenticated" class="nav-padding" (click)="openRegister()"
+    ><span>Register</span></a
+  >
+  <a *ngIf="authenticated" class="nav-padding" (click)="auth.logout()"
+    ><span>Logout</span></a
+  >
+</div>

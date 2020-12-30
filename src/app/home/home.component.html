@@ -1,0 +1,11 @@
+<div class="search">
+  <input
+    class="search-input"
+    name="search"
+    type="text"
+    placeholder="provide interview id to check your schedule"
+    [(ngModel)]="interviewId"
+    autocomplete="off"
+    (keydown.enter)="findInterview($event)"
+  />
+</div>

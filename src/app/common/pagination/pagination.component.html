@@ -1,0 +1,23 @@
+<div class="pagination">
+
+  <!--
+  <a aria-lable="Previous" (click)="paginate($event, '-1')" id="-1">
+    <mat-icon svgIcon="back" aria-hidden="false" aria-label="Go Back"></mat-icon>
+  </a>
+
+  <a class="pages" *ngFor="let page of totalItems" (click)="paginate($event, page)" id="{{page + 1}}"
+  [ngClass]="{'active':currentPage === page + 1}"
+  >{{page + 1}}</a>
+
+  <a aria-lable="Next" (click)="paginate($event, '+1')" id="+1">
+    <mat-icon svgIcon="next" aria-hidden="false" aria-label="Go Forward"></mat-icon>
+  </a>
+  -->
+
+  <mat-paginator [length]="totalData"
+              [pageSize]="itemsPerPage"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="pageEvent($event)" >
+  </mat-paginator>
+
+</div>

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "scheduler-50762"
+  },
+  "targets": {
+    "scheduler-50762": {
+      "hosting": {
+        "interview": [
+          "scheduler-50762"
+        ]
+      }
+    }
+  }
+}
