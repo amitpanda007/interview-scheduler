@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -8,9 +9,18 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class InterviewComponent implements OnInit {
   private interviewRouteId: string;
-  constructor(private route: ActivatedRoute) {}
+  private interviewName: string;
+  private interviewDate: string;
+  constructor(private route: ActivatedRoute, private store: AngularFirestore) {}
   ngOnInit(): void {
     this.interviewRouteId = this.route.snapshot.paramMap.get("interviewId");
-    console.log(this.interviewRouteId);
+    const docValue = this.store
+      .collection("interviews")
+      .doc(this.interviewRouteId)
+      .valueChanges();
+    docValue.subscribe((snapshot: any) => {
+      this.interviewName = snapshot.name;
+      this.interviewDate = snapshot.date;
+    });
   }
 }

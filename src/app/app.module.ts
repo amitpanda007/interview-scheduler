@@ -16,6 +16,7 @@ import { SuccessSnackbar, ErrorSnackbar } from "./common/snackbar.component";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "src/environments/environment";
+import { AdminModule } from "./admin/admin.module";
 
 @NgModule({
   declarations: [AppComponent, SuccessSnackbar, ErrorSnackbar],
@@ -30,6 +31,7 @@ import { environment } from "src/environments/environment";
     CoreModule,
     ScheduleModule,
     HomeModule,
+    AdminModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],

@@ -6,9 +6,6 @@
   <div *ngIf="authenticated" class="spacer">
     <span>Welcome, {{ auth.name }}</span>
   </div>
-  <div class="spacer">
-    <a (click)="openInterviews()"><span>interviews</span></a>
-  </div>
   <div class="spacer"></div>
 
   <a *ngIf="!authenticated" class="nav-padding" (click)="openLogin()"
