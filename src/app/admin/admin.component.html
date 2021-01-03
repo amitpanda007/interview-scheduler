@@ -1,1 +1,15 @@
 <h1>Admin Panel</h1>
+
+<interview-card
+  *ngFor="let interview of interviews | async"
+  [interview]="interview"
+></interview-card>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="createSchedule()"
+  aria-label="add schedule"
+>
+  <mat-icon>add</mat-icon> Schedule
+</button>

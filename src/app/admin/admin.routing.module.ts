@@ -3,6 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 import { AdminCreateComponent } from "./admin-create/admin-create.component";
 import { AdminEditComponent } from "./admin-edit/admin-edit.component";
 import { AdminComponent } from "./admin.component";
+import { CandidateCardDialogComponent } from "./card-dialog/candidate-card.dialog.component";
+import { InterviewCardDialogComponent } from "./card-dialog/interview-card.dialog.component";
+import { InterviewCardComponent } from "./interview-card/interview.card.component";
 
 const routes: Routes = [
   {
@@ -14,7 +17,7 @@ const routes: Routes = [
     component: AdminCreateComponent,
   },
   {
-    path: "admin/edit/:interviewId",
+    path: "admin/edit",
     component: AdminEditComponent,
   },
 ];
@@ -28,5 +31,8 @@ export class AdminRoutingModule {
     AdminComponent,
     AdminCreateComponent,
     AdminEditComponent,
+    InterviewCardComponent,
+    CandidateCardDialogComponent,
+    InterviewCardDialogComponent,
   ];
 }

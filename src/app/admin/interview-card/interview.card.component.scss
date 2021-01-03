@@ -1,0 +1,28 @@
+.item {
+  width: 350px;
+  margin: 10px;
+}
+
+.card-content {
+  display: inline-grid;
+  width: 299px;
+  border-right: 1px black solid;
+}
+
+.card-action {
+  display: inline-grid;
+  width: 50px;
+  justify-content: end;
+}
+
+p {
+  margin: 8px 0;
+}
+
+.btn-blue {
+  color: #303f9f;
+}
+
+.btn-red {
+  color: #ad1457;
+}

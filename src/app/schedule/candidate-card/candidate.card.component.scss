@@ -1,7 +1,23 @@
 .item {
-  display: flex;
   width: 250px;
+  margin: 10px;
+}
+
+.card-content {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px;
+}
+
+.card-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-blue {
+  color: #303f9f;
+}
+
+.btn-red {
+  color: #ad1457;
 }

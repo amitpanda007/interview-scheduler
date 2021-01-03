@@ -1,4 +1,5 @@
 <candidate-card
-  *ngFor="let candidate of candidates | async"
+  *ngFor="let candidate of candidates"
   [candidate]="candidate"
+  [isAdminCard]="false"
 ></candidate-card>

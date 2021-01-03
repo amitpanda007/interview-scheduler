@@ -1,1 +1,48 @@
 <h1>Admin Edit Panel</h1>
+
+<div class="form">
+  <mat-form-field class="form-full-width">
+    <mat-label>Name</mat-label>
+    <input type="text" matInput [(ngModel)]="interview.name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Date</mat-label>
+    <input type="date" matInput [(ngModel)]="interview.date" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Start Time</mat-label>
+    <input type="time" matInput [(ngModel)]="interview.startTime" />
+  </mat-form-field>
+</div>
+
+<div class="btn">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="saveInterviewData(interview)"
+  >
+    save
+  </button>
+  <button mat-raised-button color="primary" (click)="backToPreviousPage()">
+    back
+  </button>
+</div>
+
+<candidate-card
+  *ngFor="let candidate of candidates"
+  [candidate]="candidate"
+  [isAdminCard]="true"
+  (deleteData)="deleteCandidate($event)"
+  (editData)="editCandidate($event)"
+></candidate-card>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="addCandidate()"
+  aria-label="add candidate"
+>
+  <mat-icon>add</mat-icon> candidate
+</button>

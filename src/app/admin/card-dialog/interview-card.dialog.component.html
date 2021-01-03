@@ -1,0 +1,27 @@
+<mat-form-field>
+  <mat-label>Interview Position</mat-label>
+  <input
+    type="text"
+    matInput
+    autocomplete="off"
+    cdkFocusInitial
+    [(ngModel)]="data.interview.name"
+  />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Interview Date</mat-label>
+  <input type="date" matInput [(ngModel)]="data.interview.date" />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Start Time</mat-label>
+  <input type="time" matInput [(ngModel)]="data.interview.startTime" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="{ interview: data.interview }">
+    OK
+  </button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>

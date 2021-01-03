@@ -1,7 +1,36 @@
 <mat-card class="item">
-  <mat-chip-list aria-label="Candidate rank">
-    <mat-chip>{{ candidate.rank }}</mat-chip>
-  </mat-chip-list>
-  <h2>{{ candidate.name }}</h2>
-  <p>{{ candidate.scheduledTime }}</p>
+  <div class="card-content">
+    <mat-chip-list aria-label="Candidate rank">
+      <mat-chip>{{ candidate.rank }}</mat-chip>
+    </mat-chip-list>
+    <h3>{{ candidate.name }}</h3>
+    <p>{{ candidate.scheduledTime }}</p>
+  </div>
+  <div class="card-action">
+    <button
+      matTooltip="edit candidate"
+      matTooltipPosition="above"
+      mat-icon-button
+      color="accent"
+      class="btn-blue"
+      aria-label="Edit Schedule"
+      (click)="editCandidate(candidate)"
+      *ngIf="isAdminCard"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button
+      matTooltip="delete candidate"
+      matTooltipPosition="above"
+      mat-icon-button
+      color="accent"
+      class="btn-red"
+      aria-label="Delete Schedule"
+      (click)="deleteCandidate(candidate.id)"
+      *ngIf="isAdminCard"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </mat-card>

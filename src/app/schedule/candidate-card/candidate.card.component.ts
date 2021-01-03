@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { MatDialog } from "@angular/material";
+import { EventEmitter } from "@angular/core";
+import {
+  CandidateCardDialogComponent,
+  CandidateCardDialogResult,
+} from "src/app/admin/card-dialog/candidate-card.dialog.component";
 import { ICandidate } from "../candidate";
 
 @Component({
@@ -8,7 +15,36 @@ import { ICandidate } from "../candidate";
 })
 export class CandidateCardComponent implements OnInit {
   @Input() candidate: ICandidate;
-  constructor() {}
+  @Input() isAdminCard: boolean = false;
+  @Output() deleteData = new EventEmitter<string>();
+  @Output() editData = new EventEmitter<ICandidate>();
+  constructor(private dialog: MatDialog, private store: AngularFirestore) {}
 
   ngOnInit(): void {}
+
+  editCandidate(candidate: ICandidate): void {
+    console.log("Editing candidate");
+    const dialogRef = this.dialog.open(CandidateCardDialogComponent, {
+      width: "270px",
+      data: {
+        candidate,
+        enableDelete: true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result: CandidateCardDialogResult) => {
+      console.log(result);
+      if (result.delete) {
+        console.log("Delete the candidate");
+      } else {
+        if (!result.cancel) {
+          this.editData.emit(candidate);
+        }
+      }
+    });
+  }
+
+  deleteCandidate(candidateId: string) {
+    console.log(`Deleting candidate ${candidateId}`);
+    this.deleteData.emit(candidateId);
+  }
 }

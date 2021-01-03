@@ -1,0 +1,31 @@
+<mat-form-field>
+  <mat-label>Rank</mat-label>
+  <input
+    type="number"
+    matInput
+    cdkFocusInitial
+    [(ngModel)]="data.candidate.rank"
+  />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Name</mat-label>
+  <input
+    type="text"
+    autocomplete="off"
+    matInput
+    [(ngModel)]="data.candidate.name"
+  />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>Scheduled Time</mat-label>
+  <input type="time" matInput [(ngModel)]="data.candidate.scheduledTime" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="{ candidate: data.candidate }">
+    OK
+  </button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>

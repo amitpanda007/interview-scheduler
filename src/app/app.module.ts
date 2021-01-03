@@ -17,6 +17,8 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "src/environments/environment";
 import { AdminModule } from "./admin/admin.module";
+import { CandidateCardDialogComponent } from "./admin/card-dialog/candidate-card.dialog.component";
+import { InterviewCardDialogComponent } from "./admin/card-dialog/interview-card.dialog.component";
 
 @NgModule({
   declarations: [AppComponent, SuccessSnackbar, ErrorSnackbar],
@@ -35,7 +37,12 @@ import { AdminModule } from "./admin/admin.module";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
   ],
-  entryComponents: [SuccessSnackbar, ErrorSnackbar],
+  entryComponents: [
+    SuccessSnackbar,
+    ErrorSnackbar,
+    CandidateCardDialogComponent,
+    InterviewCardDialogComponent,
+  ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
 })

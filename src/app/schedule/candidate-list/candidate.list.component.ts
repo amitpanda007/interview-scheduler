@@ -14,10 +14,13 @@ export class CandidateListComponent implements OnInit {
 
   ngOnInit(): void {
     // const docs = "sn2iZul47lC7R6zmEFxp";
-    this.candidates = this.store
+    this.store
       .collection("interviews")
       .doc(this.interviewId)
-      .collection("candidates")
-      .valueChanges({ idField: "id" });
+      .collection("candidates", (ref) => ref.orderBy("rank"))
+      .valueChanges({ idField: "id" })
+      .subscribe((candidates) => {
+        this.candidates = candidates;
+      });
   }
 }
