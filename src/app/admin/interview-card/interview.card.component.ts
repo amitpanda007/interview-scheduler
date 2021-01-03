@@ -11,6 +11,7 @@ import { SuccessSnackbar } from "src/app/common/snackbar.component";
 })
 export class InterviewCardComponent implements OnInit {
   @Input() interview;
+  @Input() viewOnlyMode: boolean = false;
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -22,6 +23,12 @@ export class InterviewCardComponent implements OnInit {
 
   viewInterview() {
     console.log(`Live View of Interview: ${this.interview.id}`);
+    this._router.navigate(
+      ["view", { interview: btoa(JSON.stringify(this.interview)) }],
+      {
+        relativeTo: this._route,
+      }
+    );
   }
 
   editInterview() {

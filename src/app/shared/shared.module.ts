@@ -20,6 +20,7 @@ import {
   MatProgressBarModule,
   MatChipsModule,
   MatTooltipModule,
+  MatCheckboxModule,
 } from "@angular/material";
 
 import { CapitalizePipe } from "./capitalize.pipe";
@@ -50,6 +51,7 @@ import { DefaultPipe } from "./default.pipe";
     MatProgressBarModule,
     MatChipsModule,
     MatTooltipModule,
+    MatCheckboxModule,
   ],
   declarations: [CapitalizePipe, DefaultPipe],
 })

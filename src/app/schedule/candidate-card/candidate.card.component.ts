@@ -16,8 +16,11 @@ import { ICandidate } from "../candidate";
 export class CandidateCardComponent implements OnInit {
   @Input() candidate: ICandidate;
   @Input() isAdminCard: boolean = false;
-  @Output() deleteData = new EventEmitter<string>();
+  @Input() isAdminLiveCard: boolean = false;
+  @Output() deleteData = new EventEmitter<String>();
   @Output() editData = new EventEmitter<ICandidate>();
+  @Output() interviewDone = new EventEmitter<String>();
+
   constructor(private dialog: MatDialog, private store: AngularFirestore) {}
 
   ngOnInit(): void {}
@@ -46,5 +49,14 @@ export class CandidateCardComponent implements OnInit {
   deleteCandidate(candidateId: string) {
     console.log(`Deleting candidate ${candidateId}`);
     this.deleteData.emit(candidateId);
+  }
+
+  interviewComplete(candidate: ICandidate) {
+    console.log(`Setting Candidate Interview Complete ${candidate.id}`);
+    const userData: any = {
+      id: candidate.id,
+      status: candidate.done,
+    };
+    this.interviewDone.emit(userData);
   }
 }

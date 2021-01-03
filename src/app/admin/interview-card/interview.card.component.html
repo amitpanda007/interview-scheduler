@@ -4,7 +4,7 @@
     <p><label>Date: </label>{{ interview.date }}</p>
     <p><label>Start Time (24 hr): </label>{{ interview.startTime }}</p>
   </div>
-  <div class="card-action">
+  <div class="card-action" *ngIf="!viewOnlyMode">
     <button
       matTooltip="live display"
       matTooltipPosition="above"

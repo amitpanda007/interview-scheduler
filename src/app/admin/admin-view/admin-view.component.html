@@ -1,0 +1,16 @@
+<h1>Admin View Panel</h1>
+
+<div class="btn">
+  <button mat-raised-button color="primary" (click)="backToPreviousPage()">
+    back
+  </button>
+</div>
+
+<interview-card [interview]="interview" [viewOnlyMode]="true"></interview-card>
+
+<candidate-card
+  *ngFor="let candidate of candidates"
+  [candidate]="candidate"
+  [isAdminLiveCard]="true"
+  (interviewDone)="updateInterviewStatus($event)"
+></candidate-card>

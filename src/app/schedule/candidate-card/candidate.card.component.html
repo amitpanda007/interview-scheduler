@@ -1,4 +1,4 @@
-<mat-card class="item">
+<mat-card class="item" [ngClass]="{ disable: candidate.done }">
   <div class="card-content">
     <mat-chip-list aria-label="Candidate rank">
       <mat-chip>{{ candidate.rank }}</mat-chip>
@@ -32,5 +32,12 @@
     >
       <mat-icon>delete</mat-icon>
     </button>
+
+    <mat-checkbox
+      [(ngModel)]="candidate.done"
+      (change)="interviewComplete(candidate)"
+      *ngIf="isAdminLiveCard"
+      >done</mat-checkbox
+    >
   </div>
 </mat-card>

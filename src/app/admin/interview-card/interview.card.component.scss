@@ -6,13 +6,13 @@
 .card-content {
   display: inline-grid;
   width: 299px;
-  border-right: 1px black solid;
 }
 
 .card-action {
   display: inline-grid;
   width: 50px;
   justify-content: end;
+  border-left: 1px black solid;
 }
 
 p {
