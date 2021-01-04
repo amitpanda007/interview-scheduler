@@ -38,6 +38,7 @@ export class AdminComponent implements OnInit {
       data: {
         interview: {},
       },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((result: InterviewCardDialogResult) => {

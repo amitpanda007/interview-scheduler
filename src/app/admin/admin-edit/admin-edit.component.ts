@@ -109,6 +109,7 @@ export class AdminEditComponent implements OnInit {
       data: {
         candidate: {},
       },
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe((result: CandidateCardDialogResult) => {
       console.log(result);
