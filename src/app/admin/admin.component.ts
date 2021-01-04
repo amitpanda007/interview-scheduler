@@ -38,11 +38,12 @@ export class AdminComponent implements OnInit {
       data: {
         interview: {},
       },
-      disableClose: true
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result: InterviewCardDialogResult) => {
-      if (!result.cancel) {
+      console.log(result);
+      if (!result.cancel && result.interview.name != undefined) {
         this.store
           .collection("interviews")
           .add(result.interview)
