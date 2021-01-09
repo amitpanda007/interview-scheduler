@@ -18,7 +18,7 @@ export class CandidateCardComponent implements OnInit {
   @Input() isAdminCard: boolean = false;
   @Input() isAdminLiveCard: boolean = false;
   @Output() deleteData = new EventEmitter<String>();
-  @Output() editData = new EventEmitter<ICandidate>();
+  @Output() editData = new EventEmitter();
   @Output() interviewDone = new EventEmitter<String>();
 
   constructor(private dialog: MatDialog, private store: AngularFirestore) {}
@@ -26,6 +26,8 @@ export class CandidateCardComponent implements OnInit {
   ngOnInit(): void {}
 
   editCandidate(candidate: ICandidate): void {
+    const candidateOld = {};
+    Object.assign(candidateOld, candidate);
     console.log("Editing candidate");
     const dialogRef = this.dialog.open(CandidateCardDialogComponent, {
       width: "270px",
@@ -40,7 +42,11 @@ export class CandidateCardComponent implements OnInit {
         console.log("Delete the candidate");
       } else {
         if (!result.cancel) {
-          this.editData.emit(candidate);
+          const data = {
+            candidate: candidate,
+            candidateOld: candidateOld,
+          };
+          this.editData.emit(data);
         }
       }
     });

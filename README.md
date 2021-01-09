@@ -10,7 +10,7 @@ Users can see their schedules with the help of Interview ID
 
 ## Pending Requirements
 
-- Admin: Reordering candidates based on rank edits
+- ~~Admin: Reordering candidates based on rank edits~~
 - ~~Admin: Mark candidates whose interview is complete~~
 - ~~User: Show candidates whose interview is complete~~
 - User: Add filter search feature on candidate list page

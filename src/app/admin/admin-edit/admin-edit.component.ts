@@ -65,25 +65,69 @@ export class AdminEditComponent implements OnInit {
     this._location.back();
   }
 
-  editCandidate(candidate: ICandidate) {
+  editCandidate(data: any) {
+    const candidate = data.candidate;
+    const candidateOld = data.candidateOld;
+
+    if (candidate.rank != candidateOld.rank) {
+      console.log(
+        `Candidate Rank changed from ${candidateOld.rank} to ${candidate.rank}`
+      );
+      const prevRank = candidateOld.rank;
+      const newRank = candidate.rank;
+      if (prevRank > newRank) {
+        console.log("Candidate Rank is updated to a LOWER number");
+        for (let _candidate of this.candidates) {
+          if (
+            _candidate.rank >= newRank &&
+            _candidate.rank < prevRank &&
+            _candidate != candidate
+          ) {
+            _candidate.rank += 1;
+            this.updateFirestore(_candidate.id, _candidate, false);
+          }
+        }
+      } else {
+        console.log("Candidate Rank is updated to a HIGHER number");
+        for (let _candidate of this.candidates) {
+          if (
+            _candidate.rank <= newRank &&
+            _candidate.rank > prevRank &&
+            _candidate != candidate
+          ) {
+            _candidate.rank -= 1;
+            this.updateFirestore(_candidate.id, _candidate, false);
+          }
+        }
+      }
+    }
+
+    console.log(this.candidates);
+
     const candidateData = {
       rank: candidate.rank,
       name: candidate.name,
       scheduledTime: candidate.scheduledTime,
     };
 
+    this.updateFirestore(candidate.id, candidateData, true);
+  }
+
+  updateFirestore(candidateId, candidateData, showSnackbar: boolean) {
     this.store
       .collection("interviews")
       .doc(this.interview.id)
       .collection("candidates")
-      .doc(candidate.id)
+      .doc(candidateId)
       .update(candidateData)
       .then((_) => {
         console.log("Data Updated Successfully.");
-        this.snackBar.openFromComponent(SuccessSnackbar, {
-          data: "Candidate Updated Successfully",
-          duration: 2000,
-        });
+        if (showSnackbar) {
+          this.snackBar.openFromComponent(SuccessSnackbar, {
+            data: "Candidate Updated Successfully",
+            duration: 2000,
+          });
+        }
       });
   }
 
@@ -109,7 +153,7 @@ export class AdminEditComponent implements OnInit {
       data: {
         candidate: {},
       },
-      disableClose: true
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result: CandidateCardDialogResult) => {
       console.log(result);
