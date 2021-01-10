@@ -1,5 +1,7 @@
+<filter-candidates (changed)="filterCandidates($event)"></filter-candidates>
+
 <candidate-card
-  *ngFor="let candidate of candidates"
+  *ngFor="let candidate of filteredCandidates"
   [candidate]="candidate"
   [isAdminCard]="false"
 ></candidate-card>

@@ -7,6 +7,10 @@ import {
   CandidateCardDialogResult,
 } from "src/app/admin/card-dialog/candidate-card.dialog.component";
 import { ICandidate } from "../candidate";
+import {
+  DeleteConfirmationDialogComponent,
+  DeleteConfirmationDialogResult,
+} from "src/app/common/delete.dialog.component";
 
 @Component({
   selector: "candidate-card",
@@ -35,6 +39,7 @@ export class CandidateCardComponent implements OnInit {
         candidate,
         enableDelete: true,
       },
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result: CandidateCardDialogResult) => {
       console.log(result);
@@ -54,7 +59,17 @@ export class CandidateCardComponent implements OnInit {
 
   deleteCandidate(candidateId: string) {
     console.log(`Deleting candidate ${candidateId}`);
-    this.deleteData.emit(candidateId);
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: "270px",
+      disableClose: true,
+    });
+    dialogRef
+      .afterClosed()
+      .subscribe((result: DeleteConfirmationDialogResult) => {
+        if (result.delete) {
+          this.deleteData.emit(candidateId);
+        }
+      });
   }
 
   interviewComplete(candidate: ICandidate) {

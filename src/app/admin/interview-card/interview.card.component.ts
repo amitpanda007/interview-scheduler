@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { MatSnackBar } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DeleteConfirmationDialogComponent } from "src/app/common/delete.dialog.component";
 import { SuccessSnackbar } from "src/app/common/snackbar.component";
 
 @Component({
@@ -15,44 +16,56 @@ export class InterviewCardComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private store: AngularFirestore,
-    private snackBar: MatSnackBar
+    private _store: AngularFirestore,
+    private _snackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
 
-  viewInterview() {
-    console.log(`Live View of Interview: ${this.interview.id}`);
+  viewInterview(interview) {
+    console.log(`Live View of Interview: ${interview.id}`);
     this._router.navigate(
-      ["view", { interview: btoa(JSON.stringify(this.interview)) }],
+      ["view", { interview: btoa(JSON.stringify(interview)) }],
       {
         relativeTo: this._route,
       }
     );
   }
 
-  editInterview() {
-    console.log(`Editing Interview: ${this.interview.id}`);
+  editInterview(interview) {
+    console.log(`Editing Interview: ${interview.id}`);
     this._router.navigate(
-      ["edit", { interview: btoa(JSON.stringify(this.interview)) }],
+      ["edit", { interview: btoa(JSON.stringify(interview)) }],
       {
         relativeTo: this._route,
       }
     );
   }
 
-  deleteInterview() {
-    console.log(`Deleting Interview: ${this.interview.id}`);
-    this.store
-      .collection("interviews")
-      .doc(this.interview.id)
-      .delete()
-      .then((_) => {
-        console.log("Interview schedule deleted");
-        this.snackBar.openFromComponent(SuccessSnackbar, {
-          data: "Interview schedule deleted",
-          duration: 2000,
-        });
+  deleteInterview(interviewId) {
+    console.log(`Deleting Interview: ${interviewId}`);
+    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent, {
+      width: "270px",
+      disableClose: true,
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe((result: DeleteConfirmationDialogComponent) => {
+        if (result.cancel) {
+          this._store
+            .collection("interviews")
+            .doc(interviewId)
+            .delete()
+            .then((_) => {
+              console.log("Interview schedule deleted");
+              this._snackBar.openFromComponent(SuccessSnackbar, {
+                data: "Interview schedule deleted",
+                duration: 2000,
+              });
+            });
+        }
       });
   }
 }

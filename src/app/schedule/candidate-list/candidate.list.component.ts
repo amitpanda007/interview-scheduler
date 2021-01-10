@@ -10,6 +10,8 @@ import { ICandidate } from "../candidate";
 export class CandidateListComponent implements OnInit {
   @Input() interviewId: string;
   candidates: any;
+  filteredCandidates: any;
+
   constructor(private store: AngularFirestore) {}
 
   ngOnInit(): void {
@@ -20,7 +22,19 @@ export class CandidateListComponent implements OnInit {
       .collection("candidates", (ref) => ref.orderBy("rank"))
       .valueChanges({ idField: "id" })
       .subscribe((candidates) => {
-        this.candidates = candidates;
+        this.candidates = this.filteredCandidates = candidates;
       });
+  }
+
+  filterCandidates(data) {
+    if (data) {
+      this.filteredCandidates = this.candidates.filter((candidateList: any) => {
+        return (
+          candidateList.name.toLowerCase().indexOf(data.toLowerCase()) > -1
+        );
+      });
+    } else {
+      this.filteredCandidates = this.candidates;
+    }
   }
 }

@@ -113,7 +113,7 @@ export class AdminEditComponent implements OnInit {
     this.updateFirestore(candidate.id, candidateData, true);
   }
 
-  updateFirestore(candidateId, candidateData, showSnackbar: boolean) {
+  updateFirestore(candidateId: string, candidateData, showSnackbar: boolean) {
     this.store
       .collection("interviews")
       .doc(this.interview.id)

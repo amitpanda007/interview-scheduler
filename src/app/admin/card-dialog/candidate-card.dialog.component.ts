@@ -11,7 +11,7 @@ export class CandidateCardDialogComponent {
   private backupCandidate: Partial<ICandidate> = { ...this.data.candidate };
 
   constructor(
-    public dislogRef: MatDialogRef<CandidateCardDialogComponent>,
+    public dialogRef: MatDialogRef<CandidateCardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CandidateCardDialogData
   ) {}
 
@@ -20,7 +20,7 @@ export class CandidateCardDialogComponent {
     this.data.candidate.name = this.backupCandidate.name;
     this.data.candidate.scheduledTime = this.backupCandidate.scheduledTime;
     this.data.cancel = true;
-    this.dislogRef.close(this.data);
+    this.dialogRef.close(this.data);
   }
 }
 

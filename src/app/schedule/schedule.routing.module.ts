@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CandidateCardComponent } from "./candidate-card/candidate.card.component";
 import { CandidateListComponent } from "./candidate-list/candidate.list.component";
+import { FilterCandidatesComponent } from "./candidate-list/filter.candidates.component";
 import { InterviewComponent } from "./interview/interview.component";
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ export class ScheduleRoutingModule {
   static components = [
     CandidateCardComponent,
     CandidateListComponent,
+    FilterCandidatesComponent,
     InterviewComponent,
   ];
 }

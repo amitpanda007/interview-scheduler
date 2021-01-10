@@ -11,7 +11,7 @@ export class InterviewCardDialogComponent {
   private backupCandidate: Partial<IInterview> = { ...this.data.interview };
 
   constructor(
-    public dislogRef: MatDialogRef<InterviewCardDialogComponent>,
+    public dialogRef: MatDialogRef<InterviewCardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: InterviewCardDialogData
   ) {}
 
@@ -20,7 +20,7 @@ export class InterviewCardDialogComponent {
     this.data.interview.date = this.backupCandidate.date;
     this.data.interview.startTime = this.backupCandidate.startTime;
     this.data.cancel = true;
-    this.dislogRef.close(this.data);
+    this.dialogRef.close(this.data);
   }
 }
 

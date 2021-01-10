@@ -19,9 +19,15 @@ import { environment } from "src/environments/environment";
 import { AdminModule } from "./admin/admin.module";
 import { CandidateCardDialogComponent } from "./admin/card-dialog/candidate-card.dialog.component";
 import { InterviewCardDialogComponent } from "./admin/card-dialog/interview-card.dialog.component";
+import { DeleteConfirmationDialogComponent } from "./common/delete.dialog.component";
 
 @NgModule({
-  declarations: [AppComponent, SuccessSnackbar, ErrorSnackbar],
+  declarations: [
+    AppComponent,
+    SuccessSnackbar,
+    ErrorSnackbar,
+    DeleteConfirmationDialogComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -42,6 +48,7 @@ import { InterviewCardDialogComponent } from "./admin/card-dialog/interview-card
     ErrorSnackbar,
     CandidateCardDialogComponent,
     InterviewCardDialogComponent,
+    DeleteConfirmationDialogComponent,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
