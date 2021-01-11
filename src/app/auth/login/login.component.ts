@@ -1,29 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from "../../core/services/auth.service";
 
 @Component({
   moduleId: module.id,
   selector: "login",
   templateUrl: "login.component.html",
-  styleUrls : ["login.compoennt.scss"]
+  styleUrls: ["login.compoennt.scss"],
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   private loginForm;
 
   constructor(fb: FormBuilder, private authService: AuthService) {
     this.loginForm = fb.group({
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login() {
     console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value);
   }
-
 }

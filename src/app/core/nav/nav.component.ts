@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { NavService } from "../services/nav.service";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   moduleId: module.id,
@@ -10,20 +11,19 @@ import { NavService } from "../services/nav.service";
   styleUrls: ["nav.component.scss"],
 })
 export class NavComponent implements OnInit {
-  authenticated: boolean;
   baseClass: string;
+  authenticated: boolean;
+  fullName: string;
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private navService: NavService
+    private navService: NavService,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {
     this.baseClass = "toolbar";
-    // this.auth.subscribe((authenticated) => {
-    //   this.authenticated = authenticated;
-    // });
 
     this.navService.newClass$.subscribe((className) => {
       console.log(className);
