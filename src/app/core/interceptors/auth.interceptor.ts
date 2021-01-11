@@ -37,22 +37,22 @@ export class AuthInterceptor implements HttpInterceptor {
       //   return next.handle(req);
       // }
 
-      return this.auth.getAccessToken().pipe(
-        mergeMap((accessToken: string) => {
-          const reqAuth = req.clone({
-            setHeaders: { Authorization: `Bearer ${accessToken}` },
-          });
-          return next.handle(reqAuth);
-        }),
-        catchError((err) => {
-          console.error(err);
-          this.localStorageService.remove(ACC_TOKEN_KEY);
-          this.localStorageService.remove(REF_TOKEN_KEY);
-          this.localStorageService.remove(FULLNAME_KEY);
-          this.router.navigate(["/"]);
-          return throwError(err);
-        })
-      );
+      // return this.auth.getAccessToken().pipe(
+      //   mergeMap((accessToken: string) => {
+      //     const reqAuth = req.clone({
+      //       setHeaders: { Authorization: `Bearer ${accessToken}` },
+      //     });
+      //     return next.handle(reqAuth);
+      //   }),
+      //   catchError((err) => {
+      //     console.error(err);
+      //     this.localStorageService.remove(ACC_TOKEN_KEY);
+      //     this.localStorageService.remove(REF_TOKEN_KEY);
+      //     this.localStorageService.remove(FULLNAME_KEY);
+      //     this.router.navigate(["/"]);
+      //     return throwError(err);
+      //   })
+      // );
     } else {
       return next.handle(req);
     }

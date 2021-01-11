@@ -21,9 +21,9 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.baseClass = "toolbar";
-    this.auth.subscribe((authenticated) => {
-      this.authenticated = authenticated;
-    });
+    // this.auth.subscribe((authenticated) => {
+    //   this.authenticated = authenticated;
+    // });
 
     this.navService.newClass$.subscribe((className) => {
       console.log(className);
