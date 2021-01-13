@@ -20,6 +20,7 @@ import { CandidateCardDialogComponent } from "./admin/card-dialog/candidate-card
 import { InterviewCardDialogComponent } from "./admin/card-dialog/interview-card.dialog.component";
 import { DeleteConfirmationDialogComponent } from "./common/delete.dialog.component";
 import { AuthModule } from './auth/auth.module';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AuthModule } from './auth/auth.module';
     AdminModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule
   ],
   entryComponents: [
     SuccessSnackbar,

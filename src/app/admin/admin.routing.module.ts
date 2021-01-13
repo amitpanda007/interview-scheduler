@@ -7,11 +7,21 @@ import { AdminComponent } from "./admin.component";
 import { CandidateCardDialogComponent } from "./card-dialog/candidate-card.dialog.component";
 import { InterviewCardDialogComponent } from "./card-dialog/interview-card.dialog.component";
 import { InterviewCardComponent } from "./interview-card/interview.card.component";
+import { AngularFireAuthGuard, customClaims } from '@angular/fire/auth-guard';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+const adminOnly = () => pipe(
+  customClaims,
+  map(claims => claims.admin === true || [""])
+);
 
 const routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: adminOnly }
   },
   {
     path: "admin/create",
