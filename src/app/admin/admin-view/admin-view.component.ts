@@ -2,7 +2,7 @@ import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatSnackBar } from "@angular/material";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { SuccessSnackbar } from "src/app/common/snackbar.component";
 import { ICandidate } from "src/app/schedule/candidate";
 import { IInterview } from "../interview-card/interview";
@@ -19,11 +19,15 @@ export class AdminViewComponent implements OnInit {
     private _route: ActivatedRoute,
     private _store: AngularFirestore,
     private _location: Location,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _router: Router
   ) {}
 
   ngOnInit() {
     const paramData = this._route.snapshot.paramMap.get("interview");
+    if (!paramData) {
+      this._router.navigate(["/admin"]);
+    }
     this.interview = JSON.parse(atob(paramData));
 
     console.log(this.interview);
