@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { customClaims } from "@angular/fire/auth-guard";
 
 import {
   SuccessSnackbar,
   ErrorSnackbar,
 } from "../../common/snackbar.component";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { pipe, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -68,4 +71,18 @@ export class AuthService {
   isLoggedIn() {
     return !!this.afAuth.auth.currentUser;
   }
+
+  isAdmin() {
+    return new Observable(subscriber => {
+      this.afAuth.idTokenResult.subscribe(token => {
+        if(token.claims.admin) {
+          subscriber.next(true);
+        }else {
+          subscriber.next(false);
+        }
+      });
+    });
+    
+  }
+  
 }

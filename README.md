@@ -17,3 +17,6 @@ Users can see their schedules with the help of Interview ID
 - ~~Admin: Delete confirmation modal~~
 - Admin: Create Customer specific Admin Page to create interviews for specific users
 - User: Add visual Indication when data changes on page
+
+## Documents to read
+- Custom CLaims usage with Cloud Functions: https://medium.com/firebase-developers/patterns-for-security-with-firebase-supercharged-custom-claims-with-firestore-and-cloud-functions-bb8f46b24e11

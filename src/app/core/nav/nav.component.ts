@@ -14,6 +14,7 @@ export class NavComponent implements OnInit {
   baseClass: string;
   authenticated: boolean;
   fullName: string;
+  private isAdminUser;
 
   constructor(
     private auth: AuthService,
@@ -29,6 +30,10 @@ export class NavComponent implements OnInit {
       console.log(className);
       this.baseClass = className;
     });
+
+    this.auth.isAdmin().subscribe(value => {
+      this.isAdminUser = value;
+    });
   }
 
   openLogin() {
@@ -41,5 +46,9 @@ export class NavComponent implements OnInit {
 
   openInterviews() {
     this.router.navigate(["/interviews"]);
+  }
+
+  openAdminPage() {
+    this.router.navigate(["/admin"]);
   }
 }
