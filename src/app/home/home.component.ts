@@ -9,7 +9,7 @@ import { HomeService } from "../core/services/home.service";
   styleUrls: ["home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  private interviewId: string;
+  public interviewId: string;
 
   constructor(
     private homeService: HomeService,
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  findInterview(event) {
+  findInterview() {
     const id = this.interviewId.trim();
     if (id.length > 0) {
       const data = this.homeService.getInterviewFromFirebase(this.interviewId);

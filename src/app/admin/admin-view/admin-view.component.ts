@@ -3,10 +3,13 @@ import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SuccessSnackbar, ErrorSnackbar } from "src/app/common/snackbar.component";
+import {
+  SuccessSnackbar,
+  ErrorSnackbar,
+} from "src/app/common/snackbar.component";
 import { ICandidate } from "src/app/schedule/candidate";
 import { IInterview } from "../interview-card/interview";
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "admin-view",
@@ -28,16 +31,24 @@ export class AdminViewComponent implements OnInit {
 
   ngOnInit() {
     this.uid = this.afAuth.auth.currentUser.uid;
-    const paramData = this._route.snapshot.paramMap.get("interview");
+    const paramData = this._route.snapshot.paramMap.get("interviewId");
     if (!paramData) {
       this._router.navigate(["/admin"]);
     }
-    this.interview = JSON.parse(atob(paramData));
-
-    console.log(this.interview);
+    const interviewId = JSON.parse(atob(paramData));
     this._store
       .collection(this.uid)
-      .doc(this.interview.id)
+      .doc(interviewId)
+      .valueChanges()
+      .subscribe((interview: IInterview) => {
+        this.interview = interview;
+        this.interview.id = interviewId;
+        console.log(this.interview);
+      });
+
+    this._store
+      .collection(this.uid)
+      .doc(interviewId)
       .collection("candidates", (ref) => ref.orderBy("rank"))
       .valueChanges({ idField: "id" })
       .subscribe((candidates) => {
@@ -56,23 +67,50 @@ export class AdminViewComponent implements OnInit {
     console.log(`Updating Candidate Status to:${status}`);
     console.log(`Updating Interview Complete Status:${candidateId}`);
 
+    this._store.firestore
+      .runTransaction(() => {
+        return Promise.all([
+          this._store
+            .collection(this.uid)
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateId)
+            .set({ done: status }, { merge: true }),
+          this._store
+            .collection("interviews")
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateId)
+            .set({ done: status }, { merge: true }),
+        ]);
+      })
+      .then((_) => {
+        this._snackBar.openFromComponent(SuccessSnackbar, {
+          data: `Updated Candidate Interview Status To: ${status}`,
+          duration: 2000,
+        });
+      })
+      .catch((error) => {
+        this._snackBar.openFromComponent(ErrorSnackbar, {
+          data: error.message,
+          duration: 2000,
+        });
+      });
+  }
+
+  liveInterview(interview) {
+    console.log(interview);
     this._store.firestore.runTransaction(() => {
       return Promise.all([
-        this._store.collection(this.uid).doc(this.interview.id).collection("candidates").doc(candidateId).set({ done: status }, { merge: true }),
-        this._store.collection("interviews").doc(this.interview.id).collection("candidates").doc(candidateId).set({ done: status }, { merge: true })
+        this._store
+          .collection(this.uid)
+          .doc(interview.id)
+          .set({ live: interview.isLive }, { merge: true }),
+        this._store
+          .collection("interviews")
+          .doc(interview.id)
+          .set({ live: interview.isLive }, { merge: true }),
       ]);
-    })
-    .then((_) => {
-      this._snackBar.openFromComponent(SuccessSnackbar, {
-        data: `Updated Candidate Interview Status To: ${status}`,
-        duration: 2000,
-      });
-    })
-    .catch((error) => {
-      this._snackBar.openFromComponent(ErrorSnackbar, {
-        data: error.message,
-        duration: 2000,
-      });
-    })
+    });
   }
 }

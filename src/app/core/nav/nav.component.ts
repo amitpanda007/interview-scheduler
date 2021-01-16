@@ -14,13 +14,13 @@ export class NavComponent implements OnInit {
   baseClass: string;
   authenticated: boolean;
   fullName: string;
-  private isAdminUser;
+  public isAdminUser;
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router,
     private navService: NavService,
-    private afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class NavComponent implements OnInit {
       this.baseClass = className;
     });
 
-    this.auth.isAdmin().subscribe(value => {
+    this.auth.isAdmin().subscribe((value) => {
       this.isAdminUser = value;
     });
   }

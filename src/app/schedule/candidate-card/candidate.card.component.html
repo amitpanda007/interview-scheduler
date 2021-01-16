@@ -1,7 +1,14 @@
 <mat-card class="item" [ngClass]="{ disable: candidate.done }">
   <div class="card-content">
     <mat-chip-list aria-label="Candidate rank">
-      <mat-chip class="chip">{{ candidate.rank }}</mat-chip>
+      <mat-chip
+        class="chip"
+        [ngClass]="{
+          active: candidate.active,
+          disable: candidate.done
+        }"
+        >{{ candidate.rank }}</mat-chip
+      >
     </mat-chip-list>
     <h3>{{ candidate.name }}</h3>
     <p>{{ candidate.scheduledTime }}</p>
@@ -36,10 +43,11 @@
     <mat-checkbox
       matTooltip="interview complete"
       matTooltipPosition="above"
+      color="color"
       [(ngModel)]="candidate.done"
       (change)="interviewComplete(candidate)"
       *ngIf="isAdminLiveCard"
-      >done</mat-checkbox
-    >
+      >done
+    </mat-checkbox>
   </div>
 </mat-card>

@@ -8,8 +8,8 @@ import {
   ErrorSnackbar,
 } from "../../common/snackbar.component";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { pipe, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { pipe, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class AuthService {
@@ -73,16 +73,18 @@ export class AuthService {
   }
 
   isAdmin() {
-    return new Observable(subscriber => {
-      this.afAuth.idTokenResult.subscribe(token => {
-        if(token.claims.admin) {
-          subscriber.next(true);
-        }else {
+    return new Observable((subscriber) => {
+      this.afAuth.idTokenResult.subscribe((token) => {
+        if (token) {
+          if (token.claims.admin) {
+            subscriber.next(true);
+          } else {
+            subscriber.next(false);
+          }
+        } else {
           subscriber.next(false);
         }
       });
     });
-    
   }
-  
 }

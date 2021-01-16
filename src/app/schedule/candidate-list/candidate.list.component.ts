@@ -15,13 +15,21 @@ export class CandidateListComponent implements OnInit {
   constructor(private store: AngularFirestore) {}
 
   ngOnInit(): void {
-    // const docs = "sn2iZul47lC7R6zmEFxp";
     this.store
       .collection("interviews")
       .doc(this.interviewId)
       .collection("candidates", (ref) => ref.orderBy("rank"))
       .valueChanges({ idField: "id" })
       .subscribe((candidates) => {
+        if (!candidates[0].done) {
+          candidates[0].active = true;
+        }
+        for (let i = 0; i < candidates.length - 1; i++) {
+          if (candidates[i].done && !candidates[i + 1].done) {
+            candidates[i + 1].active = true;
+          }
+        }
+
         this.candidates = this.filteredCandidates = candidates;
       });
   }

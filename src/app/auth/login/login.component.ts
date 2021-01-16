@@ -9,7 +9,7 @@ import { AuthService } from "../../core/services/auth.service";
   styleUrls: ["login.compoennt.scss"],
 })
 export class LoginComponent implements OnInit {
-  private loginForm;
+  public loginForm;
 
   constructor(fb: FormBuilder, private authService: AuthService) {
     this.loginForm = fb.group({

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialog } from "@angular/material";
-import { EventEmitter } from "@angular/core";
 import {
   CandidateCardDialogComponent,
   CandidateCardDialogResult,

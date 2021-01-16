@@ -4,6 +4,15 @@
 }
 
 .header {
+  display: grid;
+  justify-content: center;
+}
+
+.card-block {
   display: flex;
   justify-content: center;
+}
+
+.card {
+  max-width: 400px;
 }

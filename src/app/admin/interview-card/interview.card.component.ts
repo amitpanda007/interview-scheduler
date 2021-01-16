@@ -1,10 +1,23 @@
-import { Component, Input, OnInit, ErrorHandler } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DeleteConfirmationDialogComponent, DeleteConfirmationDialogResult } from "src/app/common/delete.dialog.component";
-import { SuccessSnackbar, ErrorSnackbar } from "src/app/common/snackbar.component";
-import { AngularFireAuth } from '@angular/fire/auth';
+import {
+  DeleteConfirmationDialogComponent,
+  DeleteConfirmationDialogResult,
+} from "src/app/common/delete.dialog.component";
+import {
+  SuccessSnackbar,
+  ErrorSnackbar,
+} from "src/app/common/snackbar.component";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "interview-card",
@@ -14,7 +27,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class InterviewCardComponent implements OnInit {
   @Input() interview;
   @Input() viewOnlyMode: boolean = false;
+  @Output() goingLive = new EventEmitter();
   private uid;
+  private isLive: boolean;
+
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -26,12 +42,23 @@ export class InterviewCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.uid = this.afAuth.auth.currentUser.uid;
+    this.isLive = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // only run when property "data" changed
+    if (changes["interview"]) {
+      if (this.interview) {
+        this.interview.live ? (this.isLive = true) : (this.isLive = false);
+        console.log(this.isLive);
+      }
+    }
   }
 
   viewInterview(interview) {
     console.log(`Live View of Interview: ${interview.id}`);
     this._router.navigate(
-      ["view", { interview: btoa(JSON.stringify(interview)) }],
+      ["view", { interviewId: btoa(JSON.stringify(interview.id)) }],
       {
         relativeTo: this._route,
       }
@@ -60,25 +87,34 @@ export class InterviewCardComponent implements OnInit {
       .subscribe((result: DeleteConfirmationDialogResult) => {
         console.log(result);
         if (result.delete) {
-          this._store.firestore.runTransaction(() => {
-            return Promise.all([
-              this._store.collection("interviews").doc(interviewId).delete(),
-              this._store.collection(this.uid).doc(interviewId).delete(),
-            ]);
-          })
-          .then((_) => {
-            this._snackBar.openFromComponent(SuccessSnackbar, {
-              data: "Interview schedule deleted",
-              duration: 2000,
+          this._store.firestore
+            .runTransaction(() => {
+              return Promise.all([
+                this._store.collection("interviews").doc(interviewId).delete(),
+                this._store.collection(this.uid).doc(interviewId).delete(),
+              ]);
+            })
+            .then((_) => {
+              this._snackBar.openFromComponent(SuccessSnackbar, {
+                data: "Interview schedule deleted",
+                duration: 2000,
+              });
+            })
+            .catch((error) => {
+              this._snackBar.openFromComponent(ErrorSnackbar, {
+                data: error.message,
+                duration: 2000,
+              });
             });
-          })
-          .catch((error) => {
-            this._snackBar.openFromComponent(ErrorSnackbar, {
-              data: error.message,
-              duration: 2000,
-            });
-          })
         }
       });
+  }
+
+  goLive(interviewId: string, liveStatus: boolean) {
+    const data = {
+      id: interviewId,
+      isLive: !liveStatus,
+    };
+    this.goingLive.emit(data);
   }
 }

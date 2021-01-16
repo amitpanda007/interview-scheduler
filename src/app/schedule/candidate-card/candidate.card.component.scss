@@ -23,7 +23,7 @@
 }
 
 .disable {
-  background-color: lightgray;
+  background-color: lightgray !important;
   color: darkgray;
 }
 
@@ -32,4 +32,9 @@
   background-color: white;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
   font-weight: bold;
+  transition: background-color 5s;
+}
+
+.active.chip {
+  background-color: greenyellow !important;
 }

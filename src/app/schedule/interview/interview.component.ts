@@ -8,9 +8,11 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["interview.component.scss"],
 })
 export class InterviewComponent implements OnInit {
-  private interviewRouteId: string;
-  private interviewName: string;
-  private interviewDate: string;
+  public interviewRouteId: string;
+  public interviewName: string;
+  public interviewDate: string;
+  public interviewStartTime: string;
+  public currentlyLive: boolean;
 
   constructor(private route: ActivatedRoute, private store: AngularFirestore) {}
 
@@ -24,6 +26,8 @@ export class InterviewComponent implements OnInit {
     docValue.subscribe((snapshot: any) => {
       this.interviewName = snapshot.name;
       this.interviewDate = snapshot.date;
+      this.interviewStartTime = snapshot.startTime;
+      this.currentlyLive = snapshot.live;
     });
   }
 }

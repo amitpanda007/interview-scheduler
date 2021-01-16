@@ -6,7 +6,11 @@
   </button>
 </div>
 
-<interview-card [interview]="interview" [viewOnlyMode]="true"></interview-card>
+<interview-card
+  [interview]="interview"
+  [viewOnlyMode]="true"
+  (goingLive)="liveInterview($event)"
+></interview-card>
 
 <candidate-card
   *ngFor="let candidate of candidates"

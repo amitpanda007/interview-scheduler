@@ -1,5 +1,5 @@
 <mat-card class="item">
-  <div class="card-content">
+  <div class="card-content" *ngIf="interview">
     <h3><label>Position: </label>{{ interview.name }}</h3>
     <p><label>Date: </label>{{ interview.date }}</p>
     <p><label>Start Time (24 hr): </label>{{ interview.startTime }}</p>
@@ -34,12 +34,22 @@
       matTooltip="delete interview"
       matTooltipPosition="above"
       mat-icon-button
-      color="accent"
+      color="primary"
       aria-label="Delete Schedule"
       (click)="deleteInterview(interview.id)"
       class="btn-red"
     >
       <mat-icon>delete</mat-icon>
     </button>
+  </div>
+
+  <div class="card-action" *ngIf="viewOnlyMode">
+    <mat-slide-toggle
+      (click)="goLive(interview.id, isLive)"
+      [color]="color"
+      [checked]="isLive"
+      [disabled]="disabled"
+      >Live
+    </mat-slide-toggle>
   </div>
 </mat-card>
