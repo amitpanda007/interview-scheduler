@@ -4,4 +4,5 @@ export interface ICandidate {
   name: string;
   scheduledTime: string;
   done: boolean;
+  active?: boolean;
 }

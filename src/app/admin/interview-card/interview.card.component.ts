@@ -29,7 +29,9 @@ export class InterviewCardComponent implements OnInit {
   @Input() viewOnlyMode: boolean = false;
   @Output() goingLive = new EventEmitter();
   private uid;
-  private isLive: boolean;
+  public isLive: boolean;
+  public color: string;
+  public disabled: boolean;
 
   constructor(
     private _router: Router,
@@ -43,6 +45,8 @@ export class InterviewCardComponent implements OnInit {
   ngOnInit(): void {
     this.uid = this.afAuth.auth.currentUser.uid;
     this.isLive = false;
+    this.color = "primary";
+    this.disabled = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -50,7 +54,6 @@ export class InterviewCardComponent implements OnInit {
     if (changes["interview"]) {
       if (this.interview) {
         this.interview.live ? (this.isLive = true) : (this.isLive = false);
-        console.log(this.isLive);
       }
     }
   }

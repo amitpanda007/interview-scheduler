@@ -10,6 +10,7 @@
     "e2e": "ng e2e",
     "build:prod": "ng build --configuration=production",
     "deploy": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
     "release:prod": "npm run build:prod && npm run deploy"
   },
   "private": true,
