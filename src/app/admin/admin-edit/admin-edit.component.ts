@@ -3,13 +3,16 @@ import { Component, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SuccessSnackbar, ErrorSnackbar } from "src/app/common/snackbar.component";
+import {
+  SuccessSnackbar,
+  ErrorSnackbar,
+} from "src/app/common/snackbar.component";
 import { ICandidate } from "src/app/schedule/candidate";
 import {
   CandidateCardDialogComponent,
   CandidateCardDialogResult,
 } from "../card-dialog/candidate-card.dialog.component";
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "admin-edit",
@@ -33,7 +36,6 @@ export class AdminEditComponent implements OnInit {
   ngOnInit() {
     this.uid = this.afAuth.auth.currentUser.uid;
     const paramData = this._route.snapshot.paramMap.get("interview");
-    console.log(paramData);
     if (!paramData) {
       this._router.navigate(["/admin"]);
     }
@@ -59,25 +61,32 @@ export class AdminEditComponent implements OnInit {
       startTime: interview.startTime,
     };
 
-    this._store.firestore.runTransaction(() => {
-      return Promise.all([
-        this._store.collection(this.uid).doc(interview.id).update(interviewData),
-        this._store.collection("interviews").doc(interview.id).update(interviewData),
-      ]);
-    })
-    .then((_) => {
-      console.log("Data Updated Successfully.");
-      this.snackBar.openFromComponent(SuccessSnackbar, {
-        data: "Data Updated Successfully",
-        duration: 2000,
+    this._store.firestore
+      .runTransaction(() => {
+        return Promise.all([
+          this._store
+            .collection(this.uid)
+            .doc(interview.id)
+            .update(interviewData),
+          this._store
+            .collection("interviews")
+            .doc(interview.id)
+            .update(interviewData),
+        ]);
       })
-    })
-    .catch(error => {
-      this.snackBar.openFromComponent(ErrorSnackbar, {
-        data: error.message,
-        duration: 2000,
+      .then((_) => {
+        console.log("Data Updated Successfully.");
+        this.snackBar.openFromComponent(SuccessSnackbar, {
+          data: "Data Updated Successfully",
+          duration: 2000,
+        });
       })
-    });
+      .catch((error) => {
+        this.snackBar.openFromComponent(ErrorSnackbar, {
+          data: error.message,
+          duration: 2000,
+        });
+      });
   }
 
   backToPreviousPage() {
@@ -133,47 +142,69 @@ export class AdminEditComponent implements OnInit {
   }
 
   updateFirestore(candidateId: string, candidateData, showSnackbar: boolean) {
-    this._store.firestore.runTransaction(() => {
-      return Promise.all([
-        this._store.collection(this.uid).doc(this.interview.id).collection("candidates").doc(candidateId).update(candidateData),
-        this._store.collection("interviews").doc(this.interview.id).collection("candidates").doc(candidateId).update(candidateData),
-      ]);
-    })
-    .then((_) => {
-      console.log("Data Updated Successfully.");
-      this.snackBar.openFromComponent(SuccessSnackbar, {
-        data: "Candidate Updated Successfully",
-        duration: 2000,
+    this._store.firestore
+      .runTransaction(() => {
+        return Promise.all([
+          this._store
+            .collection(this.uid)
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateId)
+            .update(candidateData),
+          this._store
+            .collection("interviews")
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateId)
+            .update(candidateData),
+        ]);
       })
-    })
-    .catch(error => {
-      this.snackBar.openFromComponent(ErrorSnackbar, {
-        data: error.message,
-        duration: 2000,
+      .then((_) => {
+        console.log("Data Updated Successfully.");
+        this.snackBar.openFromComponent(SuccessSnackbar, {
+          data: "Candidate Updated Successfully",
+          duration: 2000,
+        });
       })
-    });
+      .catch((error) => {
+        this.snackBar.openFromComponent(ErrorSnackbar, {
+          data: error.message,
+          duration: 2000,
+        });
+      });
   }
 
   deleteCandidate(candidateDocId) {
-    this._store.firestore.runTransaction(() => {
-      return Promise.all([
-        this._store.collection(this.uid).doc(this.interview.id).collection("candidates").doc(candidateDocId).delete(),
-        this._store.collection("interviews").doc(this.interview.id).collection("candidates").doc(candidateDocId).delete()
-      ]);
-    })
-    .then((_) => {
-      console.log("Data Updated Successfully.");
-      this.snackBar.openFromComponent(SuccessSnackbar, {
-        data: "Candidate Deleted Successfully",
-        duration: 2000,
+    this._store.firestore
+      .runTransaction(() => {
+        return Promise.all([
+          this._store
+            .collection(this.uid)
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateDocId)
+            .delete(),
+          this._store
+            .collection("interviews")
+            .doc(this.interview.id)
+            .collection("candidates")
+            .doc(candidateDocId)
+            .delete(),
+        ]);
       })
-    })
-    .catch(error => {
-      this.snackBar.openFromComponent(ErrorSnackbar, {
-        data: error.message,
-        duration: 2000,
+      .then((_) => {
+        console.log("Data Updated Successfully.");
+        this.snackBar.openFromComponent(SuccessSnackbar, {
+          data: "Candidate Deleted Successfully",
+          duration: 2000,
+        });
       })
-    });
+      .catch((error) => {
+        this.snackBar.openFromComponent(ErrorSnackbar, {
+          data: error.message,
+          duration: 2000,
+        });
+      });
   }
 
   addCandidate() {
@@ -191,23 +222,33 @@ export class AdminEditComponent implements OnInit {
       } else {
         // TODO: handle create dialog close window properly
         if (result.candidate.name != undefined) {
-          this._store.firestore.runTransaction(async () => {
-            const docInfo = await this._store.collection(this.uid).doc(this.interview.id).collection("candidates").add(result.candidate);
-            await this._store.collection("interviews").doc(this.interview.id).collection("candidates").doc(docInfo.id).set(result.candidate);
-          })
-          .then((_) => {
-            console.log("Data Updated Successfully.");
-            this.snackBar.openFromComponent(SuccessSnackbar, {
-              data: "Candidate Added Successfully",
-              duration: 2000,
+          this._store.firestore
+            .runTransaction(async () => {
+              const docInfo = await this._store
+                .collection(this.uid)
+                .doc(this.interview.id)
+                .collection("candidates")
+                .add(result.candidate);
+              await this._store
+                .collection("interviews")
+                .doc(this.interview.id)
+                .collection("candidates")
+                .doc(docInfo.id)
+                .set(result.candidate);
             })
-          })
-          .catch(error => {
-            this.snackBar.openFromComponent(ErrorSnackbar, {
-              data: error.message,
-              duration: 2000,
+            .then((_) => {
+              console.log("Data Updated Successfully.");
+              this.snackBar.openFromComponent(SuccessSnackbar, {
+                data: "Candidate Added Successfully",
+                duration: 2000,
+              });
             })
-          });
+            .catch((error) => {
+              this.snackBar.openFromComponent(ErrorSnackbar, {
+                data: error.message,
+                duration: 2000,
+              });
+            });
         }
       }
     });
