@@ -60,12 +60,14 @@ export class InterviewCardComponent implements OnInit {
 
   viewInterview(interview) {
     console.log(`Live View of Interview: ${interview.id}`);
-    this._router.navigate(
-      ["view", { interviewId: btoa(JSON.stringify(interview.id)) }],
-      {
-        relativeTo: this._route,
-      }
-    );
+    this._router.navigate([`view/${interview.id}`], { relativeTo: this._route });
+    
+    // this._router.navigate(
+    //   ["view", { interviewId: btoa(JSON.stringify(interview.id)) }],
+    //   {
+    //     relativeTo: this._route,
+    //   }
+    // );
   }
 
   editInterview(interview) {

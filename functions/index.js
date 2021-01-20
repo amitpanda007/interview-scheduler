@@ -1,37 +1,45 @@
 const functions = require("firebase-functions");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
-const gmailEmail = functions.config().gmail.email;
-const gmailPassword = functions.config().gmail.password;
+// const gmailEmail = functions.config().gmail.email;
+// const gmailPassword = functions.config().gmail.password;
 
-const mailTransport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: gmailEmail,
-    pass: gmailPassword,
-  },
-});
+// const mailTransport = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: gmailEmail,
+//     pass: gmailPassword,
+//   },
+// });
 
-const APP_NAME = "Interview Grid";
+// const APP_NAME = "Interview Grid";
 
-async function sendWelcomeEmail(email, displayName) {
-  const mailOptions = {
-    from: `${APP_NAME} <amitpanda210@gmail.com>`,
-    to: email,
-  };
+// async function sendWelcomeEmail(email, displayName) {
+//   const mailOptions = {
+//     from: `${APP_NAME} <amitpanda210@gmail.com>`,
+//     to: email,
+//   };
 
-  mailOptions.subject = `Welcome to ${APP_NAME}!`;
-  mailOptions.text = `Hey ${displayName || ""}! Welcome to the Interview Grid.`;
+//   mailOptions.subject = `Welcome to ${APP_NAME}!`;
+//   mailOptions.text = `Hey ${displayName || ""}! Welcome to the Interview Grid.`;
 
-  await mailTransport.sendMail(mailOptions);
-  console.log("New welcome email sent to: ", email);
+//   await mailTransport.sendMail(mailOptions);
+//   console.log("New welcome email sent to: ", email);
 
-  return null;
-}
+//   return null;
+// }
 
-exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
-  const email = user.email;
-  const displayeName = user.displayName;
+// exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
+//   const email = user.email;
+//   const displayeName = user.displayName;
 
-  return sendWelcomeEmail(email, displayeName);
-});
+//   return sendWelcomeEmail(email, displayeName);
+// });
+
+exports.addToInterviewsCollection = functions.firestore.document('{collection}/{id}')
+  .onCreate((snap, context) => {
+    const collection = context.params.collection;
+    const docId = context.params.id;
+
+    console.log(collection,id);
+  })

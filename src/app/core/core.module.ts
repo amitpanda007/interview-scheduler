@@ -12,6 +12,7 @@ import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { MatSnackBarModule } from "@angular/material";
 import { NavService } from "./services/nav.service";
 import { HomeService } from "./services/home.service";
+import { AdminService } from './services/admin.service';
 
 @NgModule({
   imports: [CommonModule, SharedModule],
@@ -24,6 +25,7 @@ import { HomeService } from "./services/home.service";
     MatSnackBarModule,
     NavService,
     HomeService,
+    AdminService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })

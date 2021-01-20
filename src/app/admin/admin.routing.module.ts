@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AdminCreateComponent } from "./admin-create/admin-create.component";
 import { AdminEditComponent } from "./admin-edit/admin-edit.component";
 import { AdminViewComponent } from "./admin-view/admin-view.component";
 import { AdminComponent } from "./admin.component";
@@ -25,13 +24,7 @@ const routes: Routes = [
     data: { authGuardPipe: adminOnly },
   },
   {
-    path: "admin/create",
-    component: AdminCreateComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: adminOnly },
-  },
-  {
-    path: "admin/view",
+    path: "admin/view/:interviewId",
     component: AdminViewComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: adminOnly },
@@ -51,7 +44,6 @@ const routes: Routes = [
 export class AdminRoutingModule {
   static components = [
     AdminComponent,
-    AdminCreateComponent,
     AdminEditComponent,
     AdminViewComponent,
     InterviewCardComponent,

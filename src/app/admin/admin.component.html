@@ -1,7 +1,9 @@
 <h1>Admin Panel</h1>
 
+<mat-spinner *ngIf="isLoading" [diameter]="70"></mat-spinner>
+
 <interview-card
-  *ngFor="let interview of interviews | async"
+  *ngFor="let interview of interviews"
   [interview]="interview"
 ></interview-card>
 

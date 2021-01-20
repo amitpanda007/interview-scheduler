@@ -3,6 +3,6 @@ export interface ICandidate {
   rank: number;
   name: string;
   scheduledTime: string;
-  done: boolean;
+  done?: boolean;
   active?: boolean;
 }

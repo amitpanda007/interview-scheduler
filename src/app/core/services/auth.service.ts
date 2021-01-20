@@ -14,22 +14,22 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class AuthService {
   constructor(
-    private router: Router,
+    private _router: Router,
     private _snackBar: MatSnackBar,
-    private afAuth: AngularFireAuth
+    private _afAuth: AngularFireAuth
   ) {}
 
   async register(user) {
     const { fullName, email, password } = user;
 
     try {
-      const resp = await this.afAuth.auth.createUserWithEmailAndPassword(
+      const resp = await this._afAuth.auth.createUserWithEmailAndPassword(
         email,
         password
       );
       await resp.user.updateProfile({ displayName: fullName });
 
-      this.router.navigate([""]);
+      this._router.navigate([""]);
       this._snackBar.openFromComponent(SuccessSnackbar, {
         data: "User Created Successfully",
         duration: 2000,
@@ -46,11 +46,11 @@ export class AuthService {
     const { email, password } = user;
 
     try {
-      const resp = await this.afAuth.auth.signInWithEmailAndPassword(
+      const resp = await this._afAuth.auth.signInWithEmailAndPassword(
         email,
         password
       );
-      this.router.navigate([""]);
+      this._router.navigate([""]);
       this._snackBar.openFromComponent(SuccessSnackbar, {
         data: "Login Successful",
         duration: 2000,
@@ -64,17 +64,17 @@ export class AuthService {
   }
 
   logout() {
-    this.afAuth.auth.signOut();
-    this.router.navigate(["/login"]);
+    this._afAuth.auth.signOut();
+    this._router.navigate(["/login"]);
   }
 
   isLoggedIn() {
-    return !!this.afAuth.auth.currentUser;
+    return !!this._afAuth.auth.currentUser;
   }
 
   isAdmin() {
     return new Observable((subscriber) => {
-      this.afAuth.idTokenResult.subscribe((token) => {
+      this._afAuth.idTokenResult.subscribe((token) => {
         if (token) {
           if (token.claims.admin) {
             subscriber.next(true);

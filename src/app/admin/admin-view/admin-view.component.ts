@@ -1,5 +1,5 @@
 import { Location } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -10,51 +10,51 @@ import {
 import { ICandidate } from "src/app/schedule/candidate";
 import { IInterview } from "../interview-card/interview";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AdminService } from '../../core/services/admin.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "admin-view",
   templateUrl: "admin-view.component.html",
   styleUrls: ["admin-view.component.scss"],
 })
-export class AdminViewComponent implements OnInit {
-  interview: IInterview;
-  candidates: any;
-  private uid;
+export class AdminViewComponent implements OnInit, OnDestroy {
+  private interview: IInterview;
+  private candidates: ICandidate[];
+  private uid: string;
+  private interviewId: string;
+  private interviewSubscription: Subscription;
+  private candidatesSubscription: Subscription;
+
   constructor(
     private _route: ActivatedRoute,
     private _store: AngularFirestore,
     private _location: Location,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private afAuth: AngularFireAuth
+    private _afAuth: AngularFireAuth,
+    private _adminService: AdminService
   ) {}
 
   ngOnInit() {
-    this.uid = this.afAuth.auth.currentUser.uid;
-    const paramData = this._route.snapshot.paramMap.get("interviewId");
-    if (!paramData) {
-      this._router.navigate(["/admin"]);
-    }
-    const interviewId = JSON.parse(atob(paramData));
-    this._store
-      .collection(this.uid)
-      .doc(interviewId)
-      .valueChanges()
-      .subscribe((interview: IInterview) => {
-        this.interview = interview;
-        this.interview.id = interviewId;
-        console.log(this.interview);
-      });
+    this.uid = this._afAuth.auth.currentUser.uid;
+    this.interviewId = this._route.snapshot.paramMap.get("interviewId");
+    // const interviewId = JSON.parse(atob(paramData));
 
-    this._store
-      .collection(this.uid)
-      .doc(interviewId)
-      .collection("candidates", (ref) => ref.orderBy("rank"))
-      .valueChanges({ idField: "id" })
-      .subscribe((candidates) => {
-        console.log(candidates);
-        this.candidates = candidates;
-      });
+    this._adminService.fetchInterview(this.uid, this.interviewId);
+    this.interviewSubscription = this._adminService.interviewChanged.subscribe(interview => {
+      this.interview = interview;
+    });
+
+    this._adminService.fetchCandidates(this.uid, this.interviewId);
+    this.candidatesSubscription = this._adminService.candidateChanged.subscribe(candidates => {
+      this.candidates = candidates;
+    });
+  }
+
+  ngOnDestroy() {
+    this.interviewSubscription.unsubscribe();
+    this.candidatesSubscription.unsubscribe();
   }
 
   backToPreviousPage() {
@@ -62,28 +62,10 @@ export class AdminViewComponent implements OnInit {
   }
 
   updateInterviewStatus(userInfo) {
-    const candidateId = userInfo.id;
-    const status = userInfo.status;
-    console.log(`Updating Candidate Status to:${status}`);
-    console.log(`Updating Interview Complete Status:${candidateId}`);
+    const candidateId: string = userInfo.id;
+    const status: boolean = userInfo.status;
 
-    this._store.firestore
-      .runTransaction(() => {
-        return Promise.all([
-          this._store
-            .collection(this.uid)
-            .doc(this.interview.id)
-            .collection("candidates")
-            .doc(candidateId)
-            .set({ done: status }, { merge: true }),
-          this._store
-            .collection("interviews")
-            .doc(this.interview.id)
-            .collection("candidates")
-            .doc(candidateId)
-            .set({ done: status }, { merge: true }),
-        ]);
-      })
+    this._adminService.setCandidateCompleteStatus(this.uid, candidateId, status)
       .then((_) => {
         this._snackBar.openFromComponent(SuccessSnackbar, {
           data: `Updated Candidate Interview Status To: ${status}`,
@@ -99,18 +81,6 @@ export class AdminViewComponent implements OnInit {
   }
 
   liveInterview(interview) {
-    console.log(interview);
-    this._store.firestore.runTransaction(() => {
-      return Promise.all([
-        this._store
-          .collection(this.uid)
-          .doc(interview.id)
-          .set({ live: interview.isLive }, { merge: true }),
-        this._store
-          .collection("interviews")
-          .doc(interview.id)
-          .set({ live: interview.isLive }, { merge: true }),
-      ]);
-    });
+    this._adminService.setInterviewLiveStatus(this.uid, interview.id, interview.isLive);
   }
 }
