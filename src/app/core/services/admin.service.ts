@@ -41,7 +41,7 @@ export class AdminService {
             .valueChanges()
             .subscribe((interview: IInterview) => {
                 this.interview = interview;
-                this.interview.id = interviewId;
+                // this.interview.id = interviewId;
                 this.interviewChanged.next({...this.interview});
             });
     }
@@ -91,6 +91,60 @@ export class AdminService {
                     .set({ live: status }, { merge: true }),
             ]);
         });
+    }
+
+    deleteInterview(adminId: string, interviewId: string) {
+        return this._store.firestore
+                    .runTransaction(() => {
+                        return Promise.all([
+                        this._store.collection("interviews").doc(interviewId).delete(),
+                        this._store.collection(adminId).doc(interviewId).delete(),
+                        ]);
+                    });
+    }
+
+    updateInterview(adminId: string, interview: IInterview) {
+        return this._store.firestore
+            .runTransaction(() => {
+                return Promise.all([
+                    this._store.collection(adminId).doc(interview.id).update(interview),
+                    this._store.collection("interviews").doc(interview.id).update(interview),
+                ]);
+            });
+    }
+
+    updateCandidate(adminId: string, candidateId: string, candidateData: ICandidate) {
+        return this._store.firestore
+            .runTransaction(() => {
+                return Promise.all([
+                    this._store.collection(adminId).doc(this.interview.id).collection("candidates")
+                        .doc(candidateId).update(candidateData),
+                    this._store.collection("interviews").doc(this.interview.id).collection("candidates")
+                        .doc(candidateId).update(candidateData),
+            ]);
+        });
+    }
+
+    deleteCandidate(adminId: string, candidateDocId: string) {
+        return this._store.firestore
+            .runTransaction(() => {
+                return Promise.all([
+                    this._store.collection(adminId).doc(this.interview.id)
+                        .collection("candidates").doc(candidateDocId).delete(),
+                    this._store.collection("interviews").doc(this.interview.id)
+                        .collection("candidates").doc(candidateDocId).delete(),
+                    ]);
+            });
+    }
+
+    addCandidate(adminId: string, candidate: ICandidate) {
+        return this._store.firestore
+            .runTransaction(async () => {
+              const docInfo = await this._store.collection(adminId).doc(this.interview.id)
+                                        .collection("candidates").add(candidate);
+              await this._store.collection("interviews").doc(this.interview.id)
+                        .collection("candidates").doc(docInfo.id).set(candidate);
+            });
     }
 
 }

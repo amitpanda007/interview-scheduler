@@ -28,6 +28,7 @@ export class CandidateCardComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  // TODO: Update below method not to create copy of the candidate object and updat eteh current candidate
   editCandidate(candidate: ICandidate): void {
     const candidateOld = {};
     Object.assign(candidateOld, candidate);
@@ -42,16 +43,14 @@ export class CandidateCardComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result: CandidateCardDialogResult) => {
       console.log(result);
-      if (result.delete) {
-        console.log("Delete the candidate");
+      if (result.cancel) {
+        console.log("Cancelling Candidate Pop Up window.");
       } else {
-        if (!result.cancel) {
-          const data = {
-            candidate: candidate,
-            candidateOld: candidateOld,
-          };
-          this.editData.emit(data);
-        }
+        const data = {
+          candidate: candidate,
+          candidateOld: candidateOld,
+        };
+        this.editData.emit(data);
       }
     });
   }

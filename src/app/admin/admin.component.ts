@@ -58,6 +58,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result: InterviewCardDialogResult) => {
       console.log(result);
+      result.interview.live = false;
       if (!result.cancel && result.interview.name != undefined) {
         this._adminService.addInterviewDoc(this._uid, result.interview)
         .then((_) => {

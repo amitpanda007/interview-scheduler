@@ -1,6 +1,7 @@
 <mat-form-field>
   <mat-label>Interview Position</mat-label>
   <input
+    required
     type="text"
     matInput
     autocomplete="off"
@@ -11,16 +12,27 @@
 
 <mat-form-field>
   <mat-label>Interview Date</mat-label>
-  <input type="date" matInput [(ngModel)]="data.interview.date" />
+  <input 
+    required 
+    type="date" 
+    matInput 
+    [(ngModel)]="data.interview.date" />
 </mat-form-field>
 
 <mat-form-field>
   <mat-label>Start Time</mat-label>
-  <input type="time" matInput [(ngModel)]="data.interview.startTime" />
+  <input 
+    required 
+    type="time" 
+    matInput 
+    [(ngModel)]="data.interview.startTime" />
 </mat-form-field>
 
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="{ interview: data.interview }">
+  <button 
+    mat-button 
+    [mat-dialog-close]="{ interview: data.interview }"
+    [disabled]="!data.interview.name || !data.interview.date || !data.interview.startTime">
     OK
   </button>
   <button mat-button (click)="cancel()">Cancel</button>

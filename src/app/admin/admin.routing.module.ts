@@ -30,7 +30,7 @@ const routes: Routes = [
     data: { authGuardPipe: adminOnly },
   },
   {
-    path: "admin/edit",
+    path: "admin/edit/:interviewId",
     component: AdminEditComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: adminOnly },

@@ -18,6 +18,8 @@ import {
   ErrorSnackbar,
 } from "src/app/common/snackbar.component";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AdminService } from '../../core/services/admin.service';
+import { IInterview } from './interview';
 
 @Component({
   selector: "interview-card",
@@ -25,10 +27,10 @@ import { AngularFireAuth } from "@angular/fire/auth";
   styleUrls: ["interview.card.component.scss"],
 })
 export class InterviewCardComponent implements OnInit {
-  @Input() interview;
+  @Input() interview: IInterview;
   @Input() viewOnlyMode: boolean = false;
   @Output() goingLive = new EventEmitter();
-  private uid;
+  private _uid;
   public isLive: boolean;
   public color: string;
   public disabled: boolean;
@@ -39,45 +41,25 @@ export class InterviewCardComponent implements OnInit {
     private _store: AngularFirestore,
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog,
-    private afAuth: AngularFireAuth
+    private _afAuth: AngularFireAuth,
+    private _adminService: AdminService
   ) {}
 
   ngOnInit(): void {
-    this.uid = this.afAuth.auth.currentUser.uid;
+    this._uid = this._afAuth.auth.currentUser.uid;
     this.isLive = false;
     this.color = "primary";
     this.disabled = false;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    // only run when property "data" changed
-    if (changes["interview"]) {
-      if (this.interview) {
-        this.interview.live ? (this.isLive = true) : (this.isLive = false);
-      }
-    }
-  }
-
   viewInterview(interview) {
     console.log(`Live View of Interview: ${interview.id}`);
     this._router.navigate([`view/${interview.id}`], { relativeTo: this._route });
-    
-    // this._router.navigate(
-    //   ["view", { interviewId: btoa(JSON.stringify(interview.id)) }],
-    //   {
-    //     relativeTo: this._route,
-    //   }
-    // );
   }
 
   editInterview(interview) {
     console.log(`Editing Interview: ${interview.id}`);
-    this._router.navigate(
-      ["edit", { interview: btoa(JSON.stringify(interview)) }],
-      {
-        relativeTo: this._route,
-      }
-    );
+    this._router.navigate([`edit/${interview.id}`], { relativeTo: this._route })
   }
 
   deleteInterview(interviewId) {
@@ -92,13 +74,7 @@ export class InterviewCardComponent implements OnInit {
       .subscribe((result: DeleteConfirmationDialogResult) => {
         console.log(result);
         if (result.delete) {
-          this._store.firestore
-            .runTransaction(() => {
-              return Promise.all([
-                this._store.collection("interviews").doc(interviewId).delete(),
-                this._store.collection(this.uid).doc(interviewId).delete(),
-              ]);
-            })
+          this._adminService.deleteInterview(this._uid, interviewId)
             .then((_) => {
               this._snackBar.openFromComponent(SuccessSnackbar, {
                 data: "Interview schedule deleted",
@@ -118,7 +94,7 @@ export class InterviewCardComponent implements OnInit {
   goLive(interviewId: string, liveStatus: boolean) {
     const data = {
       id: interviewId,
-      isLive: !liveStatus,
+      isLive: !this.interview.live,
     };
     this.goingLive.emit(data);
   }

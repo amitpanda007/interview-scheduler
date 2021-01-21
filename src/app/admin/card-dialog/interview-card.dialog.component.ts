@@ -26,12 +26,10 @@ export class InterviewCardDialogComponent {
 
 export interface InterviewCardDialogData {
   interview: IInterview;
-  enableDelete: boolean;
   cancel: boolean;
 }
 
 export interface InterviewCardDialogResult {
   interview: IInterview;
-  delete?: boolean;
   cancel?: boolean;
 }

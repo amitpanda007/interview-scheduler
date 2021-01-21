@@ -43,11 +43,11 @@
     </button>
   </div>
 
-  <div class="card-action" *ngIf="viewOnlyMode">
+  <div class="card-action" *ngIf="viewOnlyMode && interview">
     <mat-slide-toggle
-      (click)="goLive(interview.id, isLive)"
+      (click)="goLive(interview.id, interview.live)"
       [color]="color"
-      [checked]="isLive"
+      [checked]="interview.live"
       [disabled]="disabled"
       >Live
     </mat-slide-toggle>

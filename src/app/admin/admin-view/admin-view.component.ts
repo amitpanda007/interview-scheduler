@@ -43,6 +43,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
 
     this._adminService.fetchInterview(this.uid, this.interviewId);
     this.interviewSubscription = this._adminService.interviewChanged.subscribe(interview => {
+      interview.id = this.interviewId;
       this.interview = interview;
     });
 

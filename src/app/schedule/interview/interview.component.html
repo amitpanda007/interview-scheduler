@@ -1,21 +1,23 @@
-<div class="header">
-  <h2>{{ interviewName }} ({{ interviewDate }})</h2>
-  <h3>Starting At: {{ interviewStartTime }}</h3>
-</div>
+<div *ngIf="interview">
+  <div class="header">
+    <h2>{{ interview.name }} ({{ interview.date }})</h2>
+    <h3>Starting At: {{ interview.startTime }}</h3>
+  </div>
 
-<div *ngIf="!currentlyLive" class="card-block">
-  <mat-card class="card">
-    <mat-card-header>
-      <mat-card-title
-        >We are not LIVE with the interview. Please wait...</mat-card-title
-      >
-      <mat-card-subtitle>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </mat-card-subtitle>
-    </mat-card-header>
-  </mat-card>
-</div>
+  <div *ngIf="!interview.live" class="card-block">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title
+          >We are not LIVE with the interview. Please wait...</mat-card-title
+        >
+        <mat-card-subtitle>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
 
-<div class="item-list" *ngIf="currentlyLive">
-  <candidate-list [interviewId]="interviewRouteId"></candidate-list>
+  <div class="item-list" *ngIf="interview.live">
+    <candidate-list [interviewId]="interviewId"></candidate-list>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 <h1>Admin Edit Panel</h1>
 
-<div class="form">
+<div class="form" *ngIf="interview">
   <mat-form-field class="form-full-width">
     <mat-label>Name</mat-label>
     <input type="text" matInput [(ngModel)]="interview.name" />
@@ -21,7 +21,7 @@
   <button
     mat-raised-button
     color="primary"
-    (click)="saveInterviewData(interview)"
+    (click)="updateInterviewData(interview)"
   >
     save
   </button>
