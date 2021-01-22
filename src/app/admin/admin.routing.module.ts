@@ -9,6 +9,7 @@ import { InterviewCardComponent } from "./interview-card/interview.card.componen
 import { AngularFireAuthGuard, customClaims } from "@angular/fire/auth-guard";
 import { pipe } from "rxjs";
 import { map } from "rxjs/operators";
+import { DelayDialogComponent } from './card-dialog/candidate-card-delay.dialog.component';
 
 const adminOnly = () =>
   pipe(
@@ -49,5 +50,6 @@ export class AdminRoutingModule {
     InterviewCardComponent,
     CandidateCardDialogComponent,
     InterviewCardDialogComponent,
+    DelayDialogComponent
   ];
 }

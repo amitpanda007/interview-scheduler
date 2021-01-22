@@ -11,8 +11,19 @@
       >
     </mat-chip-list>
     <h3>{{ candidate.name }}</h3>
-    <p>{{ candidate.scheduledTime }}</p>
+    <p>{{ candidate.scheduledTime }} (24hr)</p>
+    
+    <mat-icon 
+      matTooltip="{{ delayToolTip }}"
+      matTooltipPosition="above"
+      matBadge="{{candidate.delay}}" 
+      matBadgeColor="accent"
+      *ngIf="candidate.delay"
+      >{{ delayIcon }}
+    </mat-icon>
+    
   </div>
+
   <div class="card-action">
     <button
       matTooltip="edit candidate"
@@ -49,5 +60,17 @@
       *ngIf="isAdminLiveCard"
       >done
     </mat-checkbox>
+
+    <button
+      matTooltip="manage delay"
+      matTooltipPosition="above"
+      mat-icon-button
+      class="btn-green"
+      aria-label="Manage Delay"
+      (click)="addDelay(candidate.id)"
+      *ngIf="isAdminLiveCard"
+    >
+      <mat-icon>more_time</mat-icon>
+    </button>
   </div>
 </mat-card>

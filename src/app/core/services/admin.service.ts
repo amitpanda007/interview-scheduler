@@ -135,10 +135,12 @@ export class AdminService {
                         .collection("candidates").doc(candidateDocId).delete(),
                     ]);
                 //Set total candidate to interview collection
-                this._store.collection(adminId).doc(interviewId).get().subscribe(interview => {
+                await this._store.collection(adminId).doc(interviewId).get().subscribe(interview => {
                     const curInterview = interview.data();
-                    this._store.collection(adminId).doc(interviewId).set({candidates: curInterview.candidates - 1}, {merge: true});
-                    this._store.collection("interviews").doc(interviewId).set({candidates: curInterview.candidates - 1}, {merge: true});
+                    this._store.collection(adminId).doc(interviewId)
+                        .set({candidates: curInterview.candidates - 1}, {merge: true});
+                    this._store.collection("interviews").doc(interviewId)
+                        .set({candidates: curInterview.candidates - 1}, {merge: true});
                 });
             });
     }
@@ -159,6 +161,17 @@ export class AdminService {
                     this._store.collection(adminId).doc(interviewId).set({candidates: candidateCount}, {merge: true});
                     this._store.collection("interviews").doc(interviewId).set({candidates: candidateCount}, {merge: true});
                 });
+            });
+    }
+
+    setCandidateDelay(adminId: string, interviewId: string, candidateId: string, delay: number) {
+       return this._store.firestore.runTransaction(() => {
+           return Promise.all([
+                this._store.collection(adminId).doc(interviewId).collection("candidates")
+                    .doc(candidateId).set({delay: delay}, {merge: true}),
+                this._store.collection("interviews").doc(interviewId).collection("candidates")
+                    .doc(candidateId).set({delay: delay}, {merge: true})
+                ]);
             });
     }
 

@@ -8,7 +8,6 @@ import { InterviewCardDialogComponent } from "./card-dialog/interview-card.dialo
 
 @NgModule({
   imports: [
-    ReactiveFormsModule,
     SharedModule,
     ScheduleModule,
     AdminRoutingModule,

@@ -84,4 +84,8 @@ export class AdminViewComponent implements OnInit, OnDestroy {
   liveInterview(interview) {
     this._adminService.setInterviewLiveStatus(this.uid, interview.id, interview.isLive);
   }
+
+  addDelayToCandidate(delayData) {
+    this._adminService.setCandidateDelay(this.uid, this.interviewId, delayData.candidateId, delayData.delay);
+  }
 }

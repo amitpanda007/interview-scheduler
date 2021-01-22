@@ -10,7 +10,7 @@ admin.initializeApp({
 
 admin.auth().setCustomUserClaims(uid, { admin: true})
     .then(() => {
-        console.log('Custom claims set for teh user', uid);
+        console.log('Custom claims set for the user', uid);
         process.exit();
     })
     .catch(error => {

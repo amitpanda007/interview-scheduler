@@ -5,4 +5,5 @@ export interface ICandidate {
   scheduledTime: string;
   done?: boolean;
   active?: boolean;
+  delay?: number;
 }

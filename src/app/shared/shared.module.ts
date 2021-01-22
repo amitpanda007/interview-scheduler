@@ -31,6 +31,7 @@ import { DefaultPipe } from "./default.pipe";
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CapitalizePipe,
     DefaultPipe,
     MatSnackBarModule,

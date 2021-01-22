@@ -12,6 +12,7 @@
 .card-action {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .btn-blue {
@@ -20,6 +21,10 @@
 
 .btn-red {
   color: #ad1457;
+}
+
+.btn-green {
+  color: #00e676;
 }
 
 .disable {

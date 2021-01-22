@@ -21,6 +21,7 @@ import { InterviewCardDialogComponent } from "./admin/card-dialog/interview-card
 import { DeleteConfirmationDialogComponent } from "./common/delete.dialog.component";
 import { AuthModule } from './auth/auth.module';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { DelayDialogComponent } from './admin/card-dialog/candidate-card-delay.dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
     CandidateCardDialogComponent,
     InterviewCardDialogComponent,
     DeleteConfirmationDialogComponent,
+    DelayDialogComponent
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
