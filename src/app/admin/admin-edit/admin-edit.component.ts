@@ -128,7 +128,7 @@ export class AdminEditComponent implements OnInit {
   }
 
   updateFirestoreCandidate(candidateId: string, candidateData, showSnackbar: boolean) {
-    this._adminService.updateCandidate(this.uid, candidateId, candidateData)
+    this._adminService.updateCandidate(this.uid, this.interviewId, candidateId, candidateData)
       .then((_) => {
         console.log("Data Updated Successfully.");
         this._snackBar.openFromComponent(SuccessSnackbar, {
@@ -145,7 +145,7 @@ export class AdminEditComponent implements OnInit {
   }
 
   deleteCandidate(candidateDocId) {
-    this._adminService.deleteCandidate(this.uid, candidateDocId)
+    this._adminService.deleteCandidate(this.uid, this.interviewId, candidateDocId)
       .then((_) => {
         console.log("Data Updated Successfully.");
         this._snackBar.openFromComponent(SuccessSnackbar, {
@@ -174,7 +174,7 @@ export class AdminEditComponent implements OnInit {
       if (result.cancel) {
         console.log("Cancelled the Candidate PopUp Window.");
       } else {
-        this._adminService.addCandidate(this.uid, result.candidate)
+        this._adminService.addCandidate(this.uid, this.interviewId, result.candidate)
           .then((_) => {
             console.log("Data Updated Successfully.");
             this._snackBar.openFromComponent(SuccessSnackbar, {

@@ -17,8 +17,8 @@ Users can see their schedules with the help of Interview ID
 - ~~Admin: Delete confirmation modal~~
 - ~~Admin: Create Customer specific Admin Page to create interviews for specific users~~
 - ~~User: Add visual Indication for current live user~~
-- User: Add visual Indication when data changes on page
-- Tech: Security rule update in database
+- ~~User: Add visual Indication when data changes on page~~
+- ~~Tech: Security rule update in database~~
 
 ## Documents to read
 

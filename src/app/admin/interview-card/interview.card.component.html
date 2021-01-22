@@ -41,6 +41,17 @@
     >
       <mat-icon>delete</mat-icon>
     </button>
+
+    <div class="btn-badge" *ngIf="interview.candidates">
+      <mat-icon 
+        matTooltip="total candidates"
+        matTooltipPosition="above"
+        matBadge="{{interview.candidates}}" 
+        matBadgeColor="accent"
+        >people
+      </mat-icon>
+    </div>
+
   </div>
 
   <div class="card-action" *ngIf="viewOnlyMode && interview">

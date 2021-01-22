@@ -4,4 +4,5 @@ export class IInterview {
   date: string;
   startTime: string;
   live?: boolean;
+  candidates?: number;
 }

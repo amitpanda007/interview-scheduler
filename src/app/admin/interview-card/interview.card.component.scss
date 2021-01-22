@@ -1,6 +1,6 @@
 .item {
   width: 380px;
-  margin: 10px;
+  margin: 10px 0;
 }
 
 .card-content {
@@ -25,4 +25,13 @@ p {
 
 .btn-red {
   color: #ad1457;
+}
+
+.btn-badge {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  min-width: 0;
+  width: 40px;
+  height: 40px;
 }

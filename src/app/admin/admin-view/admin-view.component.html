@@ -16,5 +16,5 @@
   *ngFor="let candidate of candidates"
   [candidate]="candidate"
   [isAdminLiveCard]="true"
-  (interviewDone)="updateInterviewStatus($event)"
+  (interviewDone)="updateCandidateStatus($event)"
 ></candidate-card>

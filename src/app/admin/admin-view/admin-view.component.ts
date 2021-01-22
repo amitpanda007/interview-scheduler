@@ -62,11 +62,11 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     this._location.back();
   }
 
-  updateInterviewStatus(userInfo) {
+  updateCandidateStatus(userInfo) {
     const candidateId: string = userInfo.id;
     const status: boolean = userInfo.status;
 
-    this._adminService.setCandidateCompleteStatus(this.uid, candidateId, status)
+    this._adminService.setCandidateCompleteStatus(this.uid, this.interviewId, candidateId, status)
       .then((_) => {
         this._snackBar.openFromComponent(SuccessSnackbar, {
           data: `Updated Candidate Interview Status To: ${status}`,
