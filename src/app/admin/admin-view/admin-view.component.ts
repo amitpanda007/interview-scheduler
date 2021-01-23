@@ -10,8 +10,8 @@ import {
 import { ICandidate } from "src/app/schedule/candidate";
 import { IInterview } from "../interview-card/interview";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AdminService } from '../../core/services/admin.service';
-import { Subscription } from 'rxjs';
+import { AdminService } from "../../core/services/admin.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "admin-view",
@@ -19,8 +19,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ["admin-view.component.scss"],
 })
 export class AdminViewComponent implements OnInit, OnDestroy {
-  private interview: IInterview;
-  private candidates: ICandidate[];
+  public interview: IInterview;
+  public candidates: ICandidate[];
   private uid: string;
   private interviewId: string;
   private interviewSubscription: Subscription;
@@ -42,15 +42,19 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     // const interviewId = JSON.parse(atob(paramData));
 
     this._adminService.fetchInterview(this.uid, this.interviewId);
-    this.interviewSubscription = this._adminService.interviewChanged.subscribe(interview => {
-      interview.id = this.interviewId;
-      this.interview = interview;
-    });
+    this.interviewSubscription = this._adminService.interviewChanged.subscribe(
+      (interview) => {
+        interview.id = this.interviewId;
+        this.interview = interview;
+      }
+    );
 
     this._adminService.fetchCandidates(this.uid, this.interviewId);
-    this.candidatesSubscription = this._adminService.candidateChanged.subscribe(candidates => {
-      this.candidates = candidates;
-    });
+    this.candidatesSubscription = this._adminService.candidateChanged.subscribe(
+      (candidates) => {
+        this.candidates = candidates;
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -66,7 +70,13 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     const candidateId: string = userInfo.id;
     const status: boolean = userInfo.status;
 
-    this._adminService.setCandidateCompleteStatus(this.uid, this.interviewId, candidateId, status)
+    this._adminService
+      .setCandidateCompleteStatus(
+        this.uid,
+        this.interviewId,
+        candidateId,
+        status
+      )
       .then((_) => {
         this._snackBar.openFromComponent(SuccessSnackbar, {
           data: `Updated Candidate Interview Status To: ${status}`,
@@ -82,10 +92,19 @@ export class AdminViewComponent implements OnInit, OnDestroy {
   }
 
   liveInterview(interview) {
-    this._adminService.setInterviewLiveStatus(this.uid, interview.id, interview.isLive);
+    this._adminService.setInterviewLiveStatus(
+      this.uid,
+      interview.id,
+      interview.isLive
+    );
   }
 
   addDelayToCandidate(delayData) {
-    this._adminService.setCandidateDelay(this.uid, this.interviewId, delayData.candidateId, delayData.delay);
+    this._adminService.setCandidateDelay(
+      this.uid,
+      this.interviewId,
+      delayData.candidateId,
+      delayData.delay
+    );
   }
 }

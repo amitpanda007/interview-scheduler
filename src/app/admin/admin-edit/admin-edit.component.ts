@@ -13,9 +13,9 @@ import {
   CandidateCardDialogResult,
 } from "../card-dialog/candidate-card.dialog.component";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { IInterview } from '../interview-card/interview';
-import { AdminService } from '../../core/services/admin.service';
-import { Subscription } from 'rxjs';
+import { IInterview } from "../interview-card/interview";
+import { AdminService } from "../../core/services/admin.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "admin-edit",
@@ -23,12 +23,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ["admin-edit.component.scss"],
 })
 export class AdminEditComponent implements OnInit {
-  private interview: IInterview;
-  private candidates: ICandidate[];
+  public interview: IInterview;
+  public candidates: ICandidate[];
   private uid;
   private interviewId: string;
   private interviewSubscription: Subscription;
-  private candidatesSubscription: Subscription
+  private candidatesSubscription: Subscription;
 
   constructor(
     private _route: ActivatedRoute,
@@ -46,19 +46,24 @@ export class AdminEditComponent implements OnInit {
     this.interviewId = this._route.snapshot.paramMap.get("interviewId");
 
     this._adminService.fetchInterview(this.uid, this.interviewId);
-    this.interviewSubscription = this._adminService.interviewChanged.subscribe(interview => {
-      interview.id = this.interviewId;
-      this.interview = interview;
-    });
+    this.interviewSubscription = this._adminService.interviewChanged.subscribe(
+      (interview) => {
+        interview.id = this.interviewId;
+        this.interview = interview;
+      }
+    );
 
     this._adminService.fetchCandidates(this.uid, this.interviewId);
-    this.candidatesSubscription = this._adminService.candidateChanged.subscribe(candidates => {
-      this.candidates = candidates;
-    });
+    this.candidatesSubscription = this._adminService.candidateChanged.subscribe(
+      (candidates) => {
+        this.candidates = candidates;
+      }
+    );
   }
 
   updateInterviewData(interview) {
-    this._adminService.updateInterview(this.uid, interview)
+    this._adminService
+      .updateInterview(this.uid, interview)
       .then((_) => {
         console.log("Data Updated Successfully.");
         this._snackBar.openFromComponent(SuccessSnackbar, {
@@ -127,8 +132,13 @@ export class AdminEditComponent implements OnInit {
     this.updateFirestoreCandidate(candidate.id, candidateData, true);
   }
 
-  updateFirestoreCandidate(candidateId: string, candidateData, showSnackbar: boolean) {
-    this._adminService.updateCandidate(this.uid, this.interviewId, candidateId, candidateData)
+  updateFirestoreCandidate(
+    candidateId: string,
+    candidateData,
+    showSnackbar: boolean
+  ) {
+    this._adminService
+      .updateCandidate(this.uid, this.interviewId, candidateId, candidateData)
       .then((_) => {
         console.log("Data Updated Successfully.");
         this._snackBar.openFromComponent(SuccessSnackbar, {
@@ -145,7 +155,8 @@ export class AdminEditComponent implements OnInit {
   }
 
   deleteCandidate(candidateDocId) {
-    this._adminService.deleteCandidate(this.uid, this.interviewId, candidateDocId)
+    this._adminService
+      .deleteCandidate(this.uid, this.interviewId, candidateDocId)
       .then((_) => {
         console.log("Data Updated Successfully.");
         this._snackBar.openFromComponent(SuccessSnackbar, {
@@ -174,7 +185,8 @@ export class AdminEditComponent implements OnInit {
       if (result.cancel) {
         console.log("Cancelled the Candidate PopUp Window.");
       } else {
-        this._adminService.addCandidate(this.uid, this.interviewId, result.candidate)
+        this._adminService
+          .addCandidate(this.uid, this.interviewId, result.candidate)
           .then((_) => {
             console.log("Data Updated Successfully.");
             this._snackBar.openFromComponent(SuccessSnackbar, {

@@ -10,7 +10,10 @@ import {
   DeleteConfirmationDialogComponent,
   DeleteConfirmationDialogResult,
 } from "src/app/common/delete.dialog.component";
-import { DelayDialogComponent, DelayDialogResult } from '../../admin/card-dialog/candidate-card-delay.dialog.component';
+import {
+  DelayDialogComponent,
+  DelayDialogResult,
+} from "../../admin/card-dialog/candidate-card-delay.dialog.component";
 
 @Component({
   selector: "candidate-card",
@@ -25,15 +28,18 @@ export class CandidateCardComponent implements OnInit {
   @Output() editData = new EventEmitter();
   @Output() interviewDone = new EventEmitter<String>();
   @Output() delayChanged = new EventEmitter();
-  private delayIcon: string;
-  private delayToolTip: string;
+  public delayIcon: string;
+  public delayToolTip: string;
 
   constructor(private dialog: MatDialog, private store: AngularFirestore) {}
 
   ngOnInit(): void {
-    this.candidate.delay > 0 ? this.delayIcon = "arrow_drop_up" : this.delayIcon = "arrow_drop_down";
-    this.candidate.delay > 0 ? this.delayToolTip = `delayed by ${this.candidate.delay} min` : 
-                              this.delayToolTip = `completing early by ${this.candidate.delay} min`;
+    this.candidate.delay > 0
+      ? (this.delayIcon = "arrow_drop_up")
+      : (this.delayIcon = "arrow_drop_down");
+    this.candidate.delay > 0
+      ? (this.delayToolTip = `delayed by ${this.candidate.delay} min`)
+      : (this.delayToolTip = `completing early by ${this.candidate.delay} min`);
   }
 
   // TODO: Update below method not to create copy of the candidate object and updat eteh current candidate
@@ -44,7 +50,7 @@ export class CandidateCardComponent implements OnInit {
     const dialogRef = this.dialog.open(CandidateCardDialogComponent, {
       width: "270px",
       data: {
-        candidate
+        candidate,
       },
       disableClose: true,
     });
@@ -91,23 +97,21 @@ export class CandidateCardComponent implements OnInit {
       width: "270px",
       data: {
         delay: {
-          time: this.candidate.delay ? this.candidate.delay : 0
-        }
+          time: this.candidate.delay ? this.candidate.delay : 0,
+        },
       },
       disableClose: true,
     });
-    dialogRef
-      .afterClosed()
-      .subscribe((result: DelayDialogResult) => {
-        if (result.cancel) {
-          console.log("Delay Dialog PopUp Cancelled.");
-        }else {
-          const delayData = {
-            candidateId: candidateId,
-            delay: result.delay.time
-          }
-          this.delayChanged.emit(delayData);
-        }
-      });
+    dialogRef.afterClosed().subscribe((result: DelayDialogResult) => {
+      if (result.cancel) {
+        console.log("Delay Dialog PopUp Cancelled.");
+      } else {
+        const delayData = {
+          candidateId: candidateId,
+          delay: result.delay.time,
+        };
+        this.delayChanged.emit(delayData);
+      }
+    });
   }
 }
