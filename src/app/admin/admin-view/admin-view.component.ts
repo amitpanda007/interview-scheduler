@@ -28,10 +28,8 @@ export class AdminViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private _route: ActivatedRoute,
-    private _store: AngularFirestore,
     private _location: Location,
     private _snackBar: MatSnackBar,
-    private _router: Router,
     private _afAuth: AngularFireAuth,
     private _adminService: AdminService
   ) {}
@@ -91,12 +89,8 @@ export class AdminViewComponent implements OnInit, OnDestroy {
       });
   }
 
-  liveInterview(interview) {
-    this._adminService.setInterviewLiveStatus(
-      this.uid,
-      interview.id,
-      interview.isLive
-    );
+  liveInterview(data) {
+    this._adminService.setInterviewLiveStatus(this.uid, data.id, data.isLive);
   }
 
   addDelayToCandidate(delayData) {
@@ -106,5 +100,17 @@ export class AdminViewComponent implements OnInit, OnDestroy {
       delayData.candidateId,
       delayData.delay
     );
+  }
+
+  privacyMode(data) {
+    this._adminService.setInterviewPrivacyStatus(
+      this.uid,
+      data.id,
+      data.isPrivateMode
+    );
+  }
+
+  chatMode(data) {
+    this._adminService.setInterviewChatStatus(this.uid, data.id, data.isChatOn);
   }
 }

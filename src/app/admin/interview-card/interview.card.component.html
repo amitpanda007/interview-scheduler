@@ -43,24 +43,65 @@
     </button>
 
     <div class="btn-badge" *ngIf="interview.candidates">
-      <mat-icon 
+      <mat-icon
         matTooltip="total candidates"
         matTooltipPosition="above"
-        matBadge="{{interview.candidates}}" 
+        matBadge="{{ interview.candidates }}"
         matBadgeColor="accent"
         >people
       </mat-icon>
     </div>
-
   </div>
 
   <div class="card-action" *ngIf="viewOnlyMode && interview">
-    <mat-slide-toggle
-      (click)="goLive(interview.id, interview.live)"
-      [color]="color"
-      [checked]="interview.live"
-      [disabled]="disabled"
-      >Live
-    </mat-slide-toggle>
+    <div class="toggle-btn">
+      <mat-slide-toggle
+        matTooltip="go live with interview"
+        matTooltipPosition="above"
+        (click)="toggleLiveMode(interview.id, interview.live)"
+        [color]="color"
+        [checked]="interview.live"
+        [disabled]="disabled"
+      >
+        <mat-icon
+          class="toggle-icon"
+          aria-hidden="false"
+          aria-label="interview live button"
+          >play_circle</mat-icon
+        >
+      </mat-slide-toggle>
+    </div>
+    <div class="toggle-btn">
+      <mat-slide-toggle
+        matTooltip="turn chat for interview"
+        matTooltipPosition="above"
+        (click)="toggleChat(interview.id, interview.chat)"
+        [color]="color"
+        [checked]="interview.chat"
+        [disabled]="disabled"
+        ><mat-icon
+          class="toggle-icon"
+          aria-hidden="false"
+          aria-label="interview live button"
+          >chat</mat-icon
+        >
+      </mat-slide-toggle>
+    </div>
+    <div class="toggle-btn">
+      <mat-slide-toggle
+        matTooltip="turn on privacy mode"
+        matTooltipPosition="above"
+        (click)="togglePrivacy(interview.id, interview.privacy)"
+        [color]="color"
+        [checked]="interview.privacy"
+        [disabled]="disabled"
+        ><mat-icon
+          class="toggle-icon"
+          aria-hidden="false"
+          aria-label="interview live button"
+          >security</mat-icon
+        >
+      </mat-slide-toggle>
+    </div>
   </div>
 </mat-card>

@@ -5,4 +5,6 @@ export class IInterview {
   startTime: string;
   live?: boolean;
   candidates?: number;
+  chat?: boolean;
+  privacy?: boolean;
 }

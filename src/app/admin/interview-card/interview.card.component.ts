@@ -18,8 +18,8 @@ import {
   ErrorSnackbar,
 } from "src/app/common/snackbar.component";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AdminService } from '../../core/services/admin.service';
-import { IInterview } from './interview';
+import { AdminService } from "../../core/services/admin.service";
+import { IInterview } from "./interview";
 
 @Component({
   selector: "interview-card",
@@ -30,6 +30,8 @@ export class InterviewCardComponent implements OnInit {
   @Input() interview: IInterview;
   @Input() viewOnlyMode: boolean = false;
   @Output() goingLive = new EventEmitter();
+  @Output() privacyMode = new EventEmitter();
+  @Output() chatMode = new EventEmitter();
   private _uid;
   public isLive: boolean;
   public color: string;
@@ -38,7 +40,6 @@ export class InterviewCardComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _store: AngularFirestore,
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog,
     private _afAuth: AngularFireAuth,
@@ -54,12 +55,16 @@ export class InterviewCardComponent implements OnInit {
 
   viewInterview(interview) {
     console.log(`Live View of Interview: ${interview.id}`);
-    this._router.navigate([`view/${interview.id}`], { relativeTo: this._route });
+    this._router.navigate([`view/${interview.id}`], {
+      relativeTo: this._route,
+    });
   }
 
   editInterview(interview) {
     console.log(`Editing Interview: ${interview.id}`);
-    this._router.navigate([`edit/${interview.id}`], { relativeTo: this._route })
+    this._router.navigate([`edit/${interview.id}`], {
+      relativeTo: this._route,
+    });
   }
 
   deleteInterview(interviewId) {
@@ -74,7 +79,8 @@ export class InterviewCardComponent implements OnInit {
       .subscribe((result: DeleteConfirmationDialogResult) => {
         console.log(result);
         if (result.delete) {
-          this._adminService.deleteInterview(this._uid, interviewId)
+          this._adminService
+            .deleteInterview(this._uid, interviewId)
             .then((_) => {
               this._snackBar.openFromComponent(SuccessSnackbar, {
                 data: "Interview schedule deleted",
@@ -91,11 +97,28 @@ export class InterviewCardComponent implements OnInit {
       });
   }
 
-  goLive(interviewId: string, liveStatus: boolean) {
+  //TODO: change below toggle methods to be one method
+  toggleLiveMode(interviewId: string, liveStatus: boolean) {
     const data = {
       id: interviewId,
       isLive: !this.interview.live,
     };
     this.goingLive.emit(data);
+  }
+
+  togglePrivacy(interviewId: string, privacyStatus: boolean) {
+    const data = {
+      id: interviewId,
+      isPrivateMode: !this.interview.privacy,
+    };
+    this.privacyMode.emit(data);
+  }
+
+  toggleChat(interviewId: string, chatStatus: boolean) {
+    const data = {
+      id: interviewId,
+      isChatOn: !this.interview.chat,
+    };
+    this.chatMode.emit(data);
   }
 }
