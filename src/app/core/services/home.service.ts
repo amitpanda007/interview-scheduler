@@ -4,10 +4,10 @@ import { Router } from "@angular/router";
 
 @Injectable()
 export class HomeService {
-  constructor(private store: AngularFirestore, private router: Router) {}
+  constructor(private _store: AngularFirestore, private _router: Router) {}
 
   getInterviewFromFirebase(interviewId: string) {
-    const interviewDoc = this.store
+    const interviewDoc = this._store
       .collection("interviews")
       .doc(interviewId)
       .get();
@@ -15,7 +15,22 @@ export class HomeService {
     return interviewDoc;
   }
 
-  navigateToInterview(id: string) {
-    this.router.navigate([`/interview/${id}`]);
+  getCandidateFromFirebase(interviewId: string, candidateId: string) {
+    const candidateDoc = this._store
+      .collection("interviews")
+      .doc(interviewId)
+      .collection("candidates")
+      .doc(candidateId)
+      .get();
+
+    return candidateDoc;
+  }
+
+  navigateToInterview(interviewId: string) {
+    this._router.navigate([`/interview/${interviewId}`]);
+  }
+
+  navigateToInterviewWithCandidate(interviewId: string, candidateId) {
+    this._router.navigate([`/interview/${interviewId}/${candidateId}`]);
   }
 }

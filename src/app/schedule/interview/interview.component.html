@@ -18,6 +18,42 @@
   </div>
 
   <div class="item-list" *ngIf="interview.live">
-    <candidate-list [interviewId]="interviewId"></candidate-list>
+    <candidate-list
+      [interviewId]="interviewId"
+      [candidateId]="candidateId"
+      [privacyMode]="interview.privacy"
+    ></candidate-list>
+  </div>
+
+  <div *ngIf="openChatWindow" class="chat-icon">
+    <mat-icon (click)="showChat()">chat</mat-icon>
+  </div>
+
+  <div class="wrapper" *ngIf="interview.chat && !openChatWindow">
+    <nav class="nav" id="nav">
+      <div class="default-nav">
+        <div class="main-nav">
+          <div>
+            <p>{{ interview.name }}</p>
+          </div>
+          <mat-icon class="options" (click)="showChat()">cancel</mat-icon>
+        </div>
+      </div>
+    </nav>
+
+    <div class="inner" id="inner">
+      <div class="chat-content" id="content">
+        <div *ngFor="let chat of chats">
+          <div class="message-wrapper" [ngClass]="chat.senderType">
+            <div class="circle-wrapper"></div>
+            <div class="text-wrapper">{{ chat.text }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom" id="bottom">
+      <textarea class="input" id="input" [(ngModel)]="chatText"></textarea>
+      <div class="send" (click)="sendChat()"><mat-icon>send</mat-icon></div>
+    </div>
   </div>
 </div>

@@ -10,6 +10,10 @@ const routes: Routes = [
     path: "interview/:interviewId",
     component: InterviewComponent,
   },
+  {
+    path: "interview/:interviewId/:candidateId",
+    component: InterviewComponent,
+  },
 ];
 
 @NgModule({

@@ -3,9 +3,26 @@
     class="search-input"
     name="search"
     type="text"
-    placeholder="provide interview id to check your schedule"
+    [readonly]="readonlyMode"
+    placeholder="provide InterviewId to check your schedule"
     [(ngModel)]="interviewId"
     autocomplete="off"
     (keydown.enter)="findInterview()"
+  />
+</div>
+
+<div *ngIf="privateMode">
+  <h3 class="notify">Privacy Mode is on. Please provide CandidateId</h3>
+</div>
+
+<div *ngIf="privateMode" class="search">
+  <input
+    class="search-input"
+    name="search"
+    type="text"
+    placeholder="provide CandidateId to show your schedule"
+    [(ngModel)]="candidateId"
+    autocomplete="off"
+    (keydown.enter)="findCandidate()"
   />
 </div>

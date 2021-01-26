@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { ICandidate } from "../candidate";
-import { Subscription } from 'rxjs';
-import { ScheduleService } from '../../core/services/schedule.service';
+import { Subscription } from "rxjs";
+import { ScheduleService } from "../../core/services/schedule.service";
 
 @Component({
   selector: "candidate-list",
@@ -11,6 +11,8 @@ import { ScheduleService } from '../../core/services/schedule.service';
 })
 export class CandidateListComponent implements OnInit, OnDestroy {
   @Input() interviewId: string;
+  @Input() candidateId: string;
+  @Input() privacyMode: boolean;
   private candidates: ICandidate[];
   public filteredCandidates: ICandidate[];
   private candidateSubscription: Subscription;
@@ -19,19 +21,29 @@ export class CandidateListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._scheduleService.fetchCandidatesOfInterview(this.interviewId);
-    this.candidateSubscription = this._scheduleService.candidateChanged.subscribe(candidates => {
-      if (!candidates[0].done) {
-        candidates[0].active = true;
-      }
-
-      for (let i = 0; i < candidates.length - 1; i++) {
-        if (candidates[i].done && !candidates[i + 1].done) {
-          candidates[i + 1].active = true;
+    this.candidateSubscription = this._scheduleService.candidateChanged.subscribe(
+      (candidates) => {
+        if (this.privacyMode) {
+          for (let candidate of candidates) {
+            if (candidate.id.localeCompare(this.candidateId)) {
+              candidate.name = "Private User";
+            }
+          }
         }
+
+        if (!candidates[0].done) {
+          candidates[0].active = true;
+        }
+
+        for (let i = 0; i < candidates.length - 1; i++) {
+          if (candidates[i].done && !candidates[i + 1].done) {
+            candidates[i + 1].active = true;
+          }
+        }
+
+        this.candidates = this.filteredCandidates = candidates;
       }
-      
-      this.candidates = this.filteredCandidates = candidates;
-    });
+    );
   }
 
   ngOnDestroy() {
