@@ -19,8 +19,8 @@ Users can see their schedules with the help of Interview ID
 - ~~User: Add visual Indication for current live user~~
 - ~~User: Add visual Indication when data changes on page~~
 - ~~Tech: Security rule update in database~~
-- Admin: Privacy Mode: for users to only see their names & other names should be blurred
-- Admin: Chat Mode for users to chat
+- ~~Admin: Privacy Mode: for users to only see their names & other names should be blurred~~
+- ~~Admin: Chat Mode for users to chat~~
 
 ## Documents to read
 

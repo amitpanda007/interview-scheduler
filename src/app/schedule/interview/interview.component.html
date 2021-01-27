@@ -37,7 +37,7 @@
       <div class="default-nav">
         <div class="main-nav">
           <div>
-            <p>{{ interview.name }}</p>
+            <p class="chat-header">{{ interview.name }}</p>
           </div>
           <mat-icon class="options" (click)="showChat()">cancel</mat-icon>
         </div>
@@ -56,7 +56,10 @@
     </div>
     <div class="bottom" id="bottom">
       <textarea class="input" id="input" [(ngModel)]="chatText"></textarea>
-      <div class="send" (click)="sendChat()"><mat-icon>send</mat-icon></div>
+      <!-- <div class="send" (click)="sendChat()"><mat-icon color="primary">send</mat-icon></div> -->
+      <button mat-fab color="primary" aria-label="Send Chat" (click)="sendChat()" class="send-fab">
+        <mat-icon>send</mat-icon>
+      </button>
     </div>
   </div>
 </div>

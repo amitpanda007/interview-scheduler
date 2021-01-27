@@ -46,6 +46,11 @@ body {
   text-align: center;
 }
 
+.chat-header {
+  font-size: larger;
+  width: 200px;
+}
+
 .wrapper {
   height: 320px;
   width: 320px;
@@ -112,7 +117,9 @@ body {
     box-shadow: 0px 3px 3px 0px rgba(50, 50, 50, 0.1);
 
     .main-nav {
-      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       left: 0;
       width: 100%;
       height: $navHeight;
@@ -140,8 +147,8 @@ body {
         width: 32px;
         background-size: contain;
         margin: 16px;
-        position: absolute;
-        right: 0;
+        // position: absolute;
+        // right: 0;
 
         &:hover {
           cursor: pointer;
@@ -193,6 +200,20 @@ body {
     }
   }
 
+  .send-fab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    height: $navHeight/1.2;
+    width: $navHeight/1.2;
+    border-radius: 50%;
+    border: 0;
+
+    bottom: ($navHeight - ($navHeight/1.5)) / 2;
+    right: ($navHeight - ($navHeight/1.5)) / 2;
+  }
+
   .send {
     display: flex;
     justify-content: center;
@@ -202,7 +223,7 @@ body {
     width: $navHeight/1.5;
     border-radius: 50%;
     border: 0;
-    background: #69f0ae;
+    background: $gray;
     color: $white;
 
     bottom: ($navHeight - ($navHeight/1.5)) / 2;

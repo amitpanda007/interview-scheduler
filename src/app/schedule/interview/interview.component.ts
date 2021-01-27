@@ -58,21 +58,25 @@ export class InterviewComponent implements OnInit, OnDestroy {
   }
 
   sendChat() {
-    const chatData: IChat = {
-      timestamp: new Date(),
-      text: this.chatText,
-      sender: this.candidateId,
-    };
-    this.scheduleService
-      .setChatMessage(this.interviewId, chatData)
-      .then((_) => {
-        console.log("Chat Sent.");
-      })
-      .catch((error) => {
-        //TODO: handle error scenario
-        console.log(error);
-      });
-    this.chatText = "";
+    if(this.chatText && this.chatText.trim().length > 0) {
+      const chatData: IChat = {
+        timestamp: new Date(),
+        text: this.chatText,
+        sender: this.candidateId,
+      };
+      this.scheduleService
+        .setChatMessage(this.interviewId, chatData)
+        .then((_) => {
+          console.log("Chat Sent.");
+        })
+        .catch((error) => {
+          //TODO: handle error scenario
+          console.log(error);
+        });
+      this.chatText = "";
+    }else {
+      this.chatText = "";
+    }
   }
 
   showChat() {
