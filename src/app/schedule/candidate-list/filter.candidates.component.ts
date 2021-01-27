@@ -28,7 +28,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
         outline: none;
         padding: 1rem 1rem 1rem 3rem;
         // width: calc(100% - 4rem);
-        width: 15rem;
+        width: 13.7rem;
       }
     `,
   ],

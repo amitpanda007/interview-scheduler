@@ -37,9 +37,7 @@ p {
 }
 
 .toggle-btn {
-  padding-bottom: 10px;
-}
-
-.toggle-icon {
   display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
 }
