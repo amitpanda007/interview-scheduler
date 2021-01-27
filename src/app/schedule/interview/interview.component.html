@@ -25,8 +25,11 @@
     ></candidate-list>
   </div>
 
-  <div *ngIf="openChatWindow" class="chat-icon">
-    <mat-icon (click)="showChat()">chat</mat-icon>
+  <div *ngIf="interview.chat && openChatWindow" class="chat-icon">
+    <!-- <mat-icon (click)="showChat()">chat</mat-icon> -->
+    <button mat-fab color="primary" aria-label="Show Chats" (click)="showChat()">
+      <mat-icon>chat</mat-icon>
+    </button>
   </div>
 
   <div class="wrapper" *ngIf="interview.chat && !openChatWindow">

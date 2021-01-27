@@ -23,6 +23,10 @@
     </mat-icon>
     
   </div>
+  
+  <p *ngIf="isAdminCard">
+    <b>ID:</b> {{ candidate.id }}
+  </p>
 
   <div class="card-action">
     <button

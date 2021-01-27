@@ -44,7 +44,6 @@ body {
 .title {
   color: $white;
   text-align: center;
-  font-weight: 100;
 }
 
 .wrapper {
@@ -180,7 +179,6 @@ body {
     resize: none;
     overflow: scroll;
     padding-top: ($navHeight/2) - 8;
-    font-weight: 300;
 
     &:focus {
       outline: none;
@@ -252,7 +250,6 @@ body {
     margin: 0 ($navHeight - ($navHeight/1.5)) / 2;
     box-shadow: 0px 1px 0px 0px rgba(50, 50, 50, 0.3);
     border-radius: 2px;
-    font-weight: 300;
     position: relative;
     /* word-break: break-all; */
     // opacity: 0;

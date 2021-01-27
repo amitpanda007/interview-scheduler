@@ -1,6 +1,6 @@
-<h1>Admin Panel</h1>
+<h1 class="title">Admin Panel</h1>
 
-<mat-spinner *ngIf="isLoading" [diameter]="70"></mat-spinner>
+<mat-spinner *ngIf="isLoading" [diameter]="70" class="loading"></mat-spinner>
 
 <interview-card
   *ngFor="let interview of interviews"
@@ -8,6 +8,7 @@
 ></interview-card>
 
 <button
+  *ngIf="!isLoading"
   mat-raised-button
   color="primary"
   (click)="createSchedule()"
