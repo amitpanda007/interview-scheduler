@@ -59,8 +59,9 @@
         class="toggle-icon"
         aria-hidden="false"
         aria-label="interview live button"
-        >play_circle</mat-icon
+        >{{ liveIcon }}</mat-icon
       >
+      Go Live
       <mat-slide-toggle
         matTooltip="go live with interview"
         matTooltipPosition="above"
@@ -68,7 +69,7 @@
         [color]="color"
         [checked]="interview.live"
         [disabled]="disabled"
-      >  
+      >
       </mat-slide-toggle>
     </div>
     <div class="toggle-btn">
@@ -76,8 +77,9 @@
         class="toggle-icon"
         aria-hidden="false"
         aria-label="interview live button"
-        >chat</mat-icon
+        >{{ chatIcon }}</mat-icon
       >
+      Chat
       <mat-slide-toggle
         matTooltip="turn chat for interview"
         matTooltipPosition="above"
@@ -93,8 +95,9 @@
         class="toggle-icon"
         aria-hidden="false"
         aria-label="interview live button"
-        >security</mat-icon
+        >{{ privacyIcon }}</mat-icon
       >
+      Privacy Mode
       <mat-slide-toggle
         matTooltip="turn on privacy mode"
         matTooltipPosition="above"
