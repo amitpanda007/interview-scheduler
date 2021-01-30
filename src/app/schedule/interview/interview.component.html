@@ -1,6 +1,6 @@
 <div *ngIf="interview">
   <div class="header">
-    <h2>{{ interview.name }} ({{ interview.date }})</h2>
+    <h2>{{ interview.name }} ({{ interview.date.toDate() | date: 'dd/MM/yyyy' }})</h2>
     <h3>Starting At: {{ interview.startTime }}</h3>
   </div>
 

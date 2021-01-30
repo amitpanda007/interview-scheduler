@@ -1,7 +1,7 @@
 export class IInterview {
   id?: string;
   name: string;
-  date: string;
+  date: Date;
   startTime: string;
   live?: boolean;
   candidates?: number;

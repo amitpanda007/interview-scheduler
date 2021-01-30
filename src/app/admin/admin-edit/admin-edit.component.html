@@ -6,9 +6,16 @@
     <input type="text" matInput [(ngModel)]="interview.name" />
   </mat-form-field>
 
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-label>Date</mat-label>
     <input type="date" matInput [(ngModel)]="interview.date" />
+  </mat-form-field> -->
+
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input matInput [(ngModel)]="interview.date" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
