@@ -25,6 +25,7 @@ import { Subscription } from "rxjs";
 export class AdminEditComponent implements OnInit {
   public interview: IInterview;
   public candidates: ICandidate[];
+  public interviewDate: Date;
   private uid: string;
   private interviewId: string;
   private interviewSubscription: Subscription;
@@ -50,7 +51,7 @@ export class AdminEditComponent implements OnInit {
       (interview) => {
         interview.id = this.interviewId;
         this.interview = interview;
-        this.interview.date = this.interview.date.toDate();
+        this.interviewDate = new Date (this.interview.date.seconds * 1000);
       }
     );
 
@@ -63,6 +64,7 @@ export class AdminEditComponent implements OnInit {
   }
 
   updateInterviewData(interview) {
+    interview.date = this.interviewDate;
     this._adminService
       .updateInterview(this.uid, interview)
       .then((_) => {
