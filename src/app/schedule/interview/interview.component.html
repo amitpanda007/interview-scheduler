@@ -1,7 +1,21 @@
 <div *ngIf="interview">
   <div class="header">
-    <h2>{{ interview.name }} ({{ interview.date.toDate() | date: 'dd/MM/yyyy' }})</h2>
-    <h3>Starting At: {{ interview.startTime }}</h3>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ interview.name }}</mat-card-title>
+        <mat-card-subtitle
+          >Scheduled Date: {{ interview.date.toDate() | date: "dd/MM/yyyy" }},
+          {{ interview.startTime }} (24 hr)</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p></p>
+      </mat-card-content>
+    </mat-card>
+    <!-- <h2>
+      {{ interview.name }} ({{ interview.date.toDate() | date: "dd/MM/yyyy" }})
+    </h2>
+    <h3>Starting At: {{ interview.startTime }}</h3> -->
   </div>
 
   <div *ngIf="!interview.live" class="card-block">
@@ -27,7 +41,12 @@
 
   <div *ngIf="interview.chat && openChatWindow" class="chat-icon">
     <!-- <mat-icon (click)="showChat()">chat</mat-icon> -->
-    <button mat-fab color="primary" aria-label="Show Chats" (click)="showChat()">
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Show Chats"
+      (click)="showChat()"
+    >
       <mat-icon>chat</mat-icon>
     </button>
   </div>
@@ -57,7 +76,13 @@
     <div class="bottom" id="bottom">
       <textarea class="input" id="input" [(ngModel)]="chatText"></textarea>
       <!-- <div class="send" (click)="sendChat()"><mat-icon color="primary">send</mat-icon></div> -->
-      <button mat-fab color="primary" aria-label="Send Chat" (click)="sendChat()" class="send-fab">
+      <button
+        mat-fab
+        color="primary"
+        aria-label="Send Chat"
+        (click)="sendChat()"
+        class="send-fab"
+      >
         <mat-icon>send</mat-icon>
       </button>
     </div>
