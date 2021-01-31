@@ -52,6 +52,20 @@ body {
   width: 200px;
 }
 
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-live {
+  color: #09af00;
+}
+
+.status-notlive {
+  color: #e54304;
+}
+
 .wrapper {
   height: 320px;
   width: 320px;

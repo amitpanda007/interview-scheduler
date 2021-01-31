@@ -9,25 +9,28 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <p></p>
+        <div class="status">
+          <mat-label>Interview Status:</mat-label>
+          <mat-icon
+            matTooltip="Interview is LIVE"
+            matTooltipPosition="above"
+            *ngIf="interview.live"
+            class="status-live"
+            >circle</mat-icon
+          >
+          <mat-icon
+            matTooltip="Interview is not LIVE"
+            matTooltipPosition="above"
+            *ngIf="!interview.live"
+            class="status-notlive"
+            >circle</mat-icon
+          >
+          <!-- <mat-progress-bar
+            mode="buffer"
+            *ngIf="!interview.live"
+          ></mat-progress-bar> -->
+        </div>
       </mat-card-content>
-    </mat-card>
-    <!-- <h2>
-      {{ interview.name }} ({{ interview.date.toDate() | date: "dd/MM/yyyy" }})
-    </h2>
-    <h3>Starting At: {{ interview.startTime }}</h3> -->
-  </div>
-
-  <div *ngIf="!interview.live" class="card-block">
-    <mat-card class="card">
-      <mat-card-header>
-        <mat-card-title
-          >We are not LIVE with the interview. Please wait...</mat-card-title
-        >
-        <mat-card-subtitle>
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </mat-card-subtitle>
-      </mat-card-header>
     </mat-card>
   </div>
 
