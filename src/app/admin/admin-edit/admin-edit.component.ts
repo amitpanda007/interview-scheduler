@@ -26,6 +26,7 @@ export class AdminEditComponent implements OnInit {
   public interview: IInterview;
   public candidates: ICandidate[];
   public interviewDate: Date;
+  public isLoading: boolean;
   private uid: string;
   private interviewId: string;
   private interviewSubscription: Subscription;
@@ -43,6 +44,7 @@ export class AdminEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.uid = this._afAuth.auth.currentUser.uid;
     this.interviewId = this._route.snapshot.paramMap.get("interviewId");
 
@@ -59,22 +61,26 @@ export class AdminEditComponent implements OnInit {
     this.candidatesSubscription = this._adminService.candidateChanged.subscribe(
       (candidates) => {
         this.candidates = candidates;
+        this.isLoading = false;
       }
     );
   }
 
   updateInterviewData(interview) {
+    this.isLoading = true;
     interview.date = this.interviewDate;
     this._adminService
       .updateInterview(this.uid, interview)
       .then((_) => {
         console.log("Data Updated Successfully.");
+        this.isLoading = false;
         this._snackBar.openFromComponent(SuccessSnackbar, {
           data: "Data Updated Successfully",
           duration: 2000,
         });
       })
       .catch((error) => {
+        this.isLoading = false;
         this._snackBar.openFromComponent(ErrorSnackbar, {
           data: error.message,
           duration: 2000,

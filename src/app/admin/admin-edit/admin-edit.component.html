@@ -1,15 +1,13 @@
 <h1 class="title">Admin Edit Panel</h1>
 
+<mat-spinner *ngIf="isLoading" [diameter]="70" class="loading"></mat-spinner>
+
+<div *ngIf="!isLoading">
 <div class="form" *ngIf="interview">
   <mat-form-field class="form-full-width">
     <mat-label>Name</mat-label>
     <input type="text" matInput [(ngModel)]="interview.name" />
   </mat-form-field>
-
-  <!-- <mat-form-field>
-    <mat-label>Date</mat-label>
-    <input type="date" matInput [(ngModel)]="interview.date" />
-  </mat-form-field> -->
 
   <mat-form-field>
     <mat-label>Choose a date</mat-label>
@@ -53,3 +51,4 @@
 >
   <mat-icon>add</mat-icon> candidate
 </button>
+</div>
