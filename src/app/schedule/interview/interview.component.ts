@@ -17,6 +17,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
   public openChatWindow: boolean;
   public interview: IInterview;
   public chats: IChat[];
+  public isLoading: boolean;
   private interviewsSubscription: Subscription;
   private chatSubscription: Subscription;
 
@@ -26,6 +27,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.openChatWindow = false;
     this.interviewId = this.route.snapshot.paramMap.get("interviewId");
     this.candidateId = this.route.snapshot.paramMap.get("candidateId");
@@ -33,6 +35,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
     this.interviewsSubscription = this.scheduleService.interviewChanged.subscribe(
       (interview) => {
         this.interview = interview;
+        this.isLoading = false;
       }
     );
 

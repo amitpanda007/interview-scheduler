@@ -1,4 +1,6 @@
-<div *ngIf="interview">
+<mat-spinner *ngIf="isLoading" [diameter]="70" class="loading"></mat-spinner>
+
+<div *ngIf="interview && !isLoading">
   <div class="header">
     <mat-card>
       <mat-card-header>
@@ -25,10 +27,6 @@
             class="status-notlive"
             >circle</mat-icon
           >
-          <!-- <mat-progress-bar
-            mode="buffer"
-            *ngIf="!interview.live"
-          ></mat-progress-bar> -->
         </div>
       </mat-card-content>
     </mat-card>

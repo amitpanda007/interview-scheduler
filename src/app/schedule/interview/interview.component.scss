@@ -18,6 +18,12 @@ $trans: 0.3s ease;
   justify-content: center;
 }
 
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 .header {
   display: grid;
   justify-content: center;
