@@ -46,6 +46,6 @@ testem.log
 Thumbs.db
 
 # Firebase Deployment
-.firebase
+/.firebase
 
 scheduler-50762-firebase-adminsdk-gmkvz-295403ff47.json
