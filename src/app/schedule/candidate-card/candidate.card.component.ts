@@ -22,6 +22,7 @@ import {
 })
 export class CandidateCardComponent implements OnInit {
   @Input() candidate: ICandidate;
+  @Input() isUserCard: boolean = false;
   @Input() isAdminCard: boolean = false;
   @Input() isAdminLiveCard: boolean = false;
   @Output() deleteData = new EventEmitter<String>();
@@ -30,10 +31,24 @@ export class CandidateCardComponent implements OnInit {
   @Output() delayChanged = new EventEmitter();
   public delayIcon: string;
   public delayToolTip: string;
+  public completeIcon: string;
+  public percentCompleted: number = 0;
+  private INCREMENT_PERCETAGE: number = 0.5;
 
   constructor(private dialog: MatDialog, private store: AngularFirestore) {}
 
   ngOnInit(): void {
+    if (this.candidate.active) {
+      const completeInterval = setInterval(() => {
+        this.percentCompleted =
+          this.percentCompleted + this.INCREMENT_PERCETAGE;
+        if (this.percentCompleted == 100) {
+          clearInterval(completeInterval);
+          this.completeIcon = "done";
+        }
+      }, 1000);
+    }
+
     this.candidate.delay > 0
       ? (this.delayIcon = "arrow_drop_up")
       : (this.delayIcon = "arrow_drop_down");

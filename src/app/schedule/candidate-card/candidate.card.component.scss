@@ -1,18 +1,21 @@
 .item {
   width: 300px;
   margin: 10px 0;
+  z-index: 2;
 }
 
 .card-content {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  z-index: 2;
 }
 
 .card-action {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  z-index: 2;
 }
 
 .card-content-wrapper {
@@ -29,6 +32,13 @@
 
 .btn-green {
   color: #00e676;
+}
+
+.icon-done {
+  color: green;
+  position: absolute;
+  right: 0;
+  margin: 10px;
 }
 
 .disable {
@@ -54,4 +64,14 @@
     width: 300px;
     margin: 10px 0;
   }
+}
+
+#background {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  background-color: aquamarine;
+  z-index: 1;
+  opacity: 0.5;
 }

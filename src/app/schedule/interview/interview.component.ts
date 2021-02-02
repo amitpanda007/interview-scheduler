@@ -28,7 +28,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.openChatWindow = false;
+    this.openChatWindow = true;
     this.interviewId = this.route.snapshot.paramMap.get("interviewId");
     this.candidateId = this.route.snapshot.paramMap.get("candidateId");
     this.scheduleService.fetchIntervewWithId(this.interviewId);
@@ -61,7 +61,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
   }
 
   sendChat() {
-    if(this.chatText && this.chatText.trim().length > 0) {
+    if (this.chatText && this.chatText.trim().length > 0) {
       const chatData: IChat = {
         timestamp: new Date(),
         text: this.chatText,
@@ -77,7 +77,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
           console.log(error);
         });
       this.chatText = "";
-    }else {
+    } else {
       this.chatText = "";
     }
   }

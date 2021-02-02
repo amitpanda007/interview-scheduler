@@ -47,13 +47,34 @@ p {
     width: 300px;
     margin: 10px 0;
   }
-  
+
   .card-content {
     display: inline-grid;
     width: 299px;
     border-bottom: 1px black solid;
   }
-  
+
+  .card-action {
+    display: inherit;
+    width: 299px;
+    justify-content: center;
+    border-left: 0px black solid;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 560px) {
+  .item {
+    width: 300px;
+    margin: 10px 0;
+  }
+
+  .card-content {
+    display: inline-grid;
+    width: 299px;
+    border-bottom: 1px black solid;
+  }
+
   .card-action {
     display: inherit;
     width: 299px;

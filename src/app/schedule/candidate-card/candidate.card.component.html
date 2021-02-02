@@ -1,18 +1,17 @@
 <mat-card class="item" [ngClass]="{ disable: candidate.done }">
   <div class="card-content-wrapper">
-  <mat-chip
-    class="chip"
-    [ngClass]="{
-      active: candidate.active,
-      disable: candidate.done
-    }"
-    >{{ candidate.rank }}</mat-chip
-  >
-  <div class="card-content">
-    <mat-chip-list aria-label="Candidate rank">
-    </mat-chip-list>
+    <mat-chip
+      class="chip"
+      [ngClass]="{
+        active: candidate.active,
+        disable: candidate.done
+      }"
+      >{{ candidate.rank }}</mat-chip
+    >
+    <div class="card-content">
+      <mat-chip-list aria-label="Candidate rank"> </mat-chip-list>
 
-    <mat-card-header>
+      <mat-card-header>
         <mat-card-title>{{ candidate.name }}</mat-card-title>
         <mat-card-subtitle
           >{{ candidate.scheduledTime }} (24 hr)</mat-card-subtitle
@@ -21,18 +20,19 @@
           >ID: {{ candidate.id }}</mat-card-subtitle
         >
       </mat-card-header>
-    
-    <mat-icon 
-      matTooltip="{{ delayToolTip }}"
-      matTooltipPosition="above"
-      matBadge="{{candidate.delay}}" 
-      matBadgeColor="accent"
-      *ngIf="candidate.delay"
-      >{{ delayIcon }}
-    </mat-icon>
-    
+
+      <mat-icon
+        matTooltip="{{ delayToolTip }}"
+        matTooltipPosition="above"
+        matBadge="{{ candidate.delay }}"
+        matBadgeColor="accent"
+        *ngIf="candidate.delay"
+        >{{ delayIcon }}
+      </mat-icon>
+
+      <mat-icon class="icon-done">{{ completeIcon }} </mat-icon>
+    </div>
   </div>
-</div>
 
   <div class="card-action">
     <button
@@ -83,4 +83,9 @@
       <mat-icon>more_time</mat-icon>
     </button>
   </div>
+  <div
+    [style.width.%]="percentCompleted"
+    *ngIf="isUserCard && candidate.active"
+    id="background"
+  ></div>
 </mat-card>
