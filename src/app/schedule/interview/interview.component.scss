@@ -20,8 +20,8 @@ $trans: 0.3s ease;
 
 .loading {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 45%;
+  left: 45%;
 }
 
 .header {
@@ -55,7 +55,8 @@ body {
 
 .chat-header {
   font-size: larger;
-  width: 200px;
+  width: 250px;
+  font-weight: bold;
 }
 
 .status {
@@ -81,6 +82,7 @@ body {
   bottom: 0;
   right: 10px;
   z-index: 2;
+  border-radius: 5px;
 
   box-shadow: 0px 3px 3px 0px rgba(50, 50, 50, 0.5);
 
@@ -165,12 +167,12 @@ body {
       }
 
       .options {
-        height: 32px;
+        // height: 32px;
         width: 32px;
         background-size: contain;
         margin: 16px;
-        // position: absolute;
-        // right: 0;
+        position: absolute;
+        right: 0;
 
         &:hover {
           cursor: pointer;
@@ -364,13 +366,25 @@ body {
 
 .chat-icon {
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   bottom: 40px;
   right: 40px;
   margin: 5px;
+  z-index: 2;
 }
 
 .item-list-candidate {
   display: inline-grid;
   justify-items: center;
+}
+
+@media (max-width: 560px) {
+  .chat-icon {
+    cursor: pointer;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    z-index: 2;
+  }
 }

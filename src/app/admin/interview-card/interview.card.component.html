@@ -5,7 +5,7 @@
     <p><label>Start Time (24 hr): </label>{{ interview.startTime }}</p>
     <p><label>Interview ID: </label>{{ interview.id }}</p>
   </div>
-  <div class="card-action" *ngIf="!viewOnlyMode">
+  <div class="card-action-view" *ngIf="!viewOnlyMode">
     <button
       matTooltip="live display"
       matTooltipPosition="above"
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="card-action" *ngIf="viewOnlyMode && interview">
+  <div class="card-action-live" *ngIf="viewOnlyMode && interview">
     <div class="toggle-btn">
       <mat-icon
         class="toggle-icon"

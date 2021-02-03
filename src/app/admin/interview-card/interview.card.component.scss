@@ -8,7 +8,14 @@
   width: 299px;
 }
 
-.card-action {
+.card-action-live {
+  display: inline-grid;
+  width: 170px;
+  justify-content: center;
+  border-left: 1px black solid;
+}
+
+.card-action-view {
   display: inline-grid;
   width: 170px;
   justify-content: center;
@@ -29,7 +36,7 @@ p {
 
 .btn-badge {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 0;
   min-width: 0;
   width: 40px;
@@ -54,12 +61,20 @@ p {
     border-bottom: 1px black solid;
   }
 
-  .card-action {
+  .card-action-live {
     display: inherit;
+    justify-content: space-evenly;
     width: 299px;
-    justify-content: center;
     border-left: 0px black solid;
-    margin-top: 5px;
+    margin-top: 10px;
+  }
+
+  .card-action-view {
+    display: flex;
+    justify-content: space-evenly;
+    width: 299px;
+    border-left: 0px black solid;
+    margin-top: 10px;
   }
 }
 
@@ -75,11 +90,19 @@ p {
     border-bottom: 1px black solid;
   }
 
-  .card-action {
+  .card-action-live {
     display: inherit;
+    justify-content: space-evenly;
     width: 299px;
-    justify-content: center;
     border-left: 0px black solid;
-    margin-top: 5px;
+    margin-top: 10px;
+  }
+
+  .card-action-view {
+    display: flex;
+    justify-content: space-evenly;
+    width: 299px;
+    border-left: 0px black solid;
+    margin-top: 10px;
   }
 }
