@@ -21,18 +21,11 @@
         >
       </mat-card-header>
 
-      <mat-icon
-        matTooltip="{{ delayToolTip }}"
-        matTooltipPosition="above"
-        matBadge="{{ candidate.delay }}"
-        matBadgeColor="accent"
-        *ngIf="candidate.delay"
-        >{{ delayIcon }}
-      </mat-icon>
-
       <mat-icon class="icon-done">{{ completeIcon }} </mat-icon>
     </div>
   </div>
+
+  <button *ngIf="candidate.delay" [ngClass]="candidate.delay > 0 ? 'deply-plus' : 'deply-minus'" mat-stroked-button>{{ delayText }}</button>
 
   <div class="card-action">
     <button

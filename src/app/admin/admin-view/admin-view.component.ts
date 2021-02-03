@@ -21,6 +21,7 @@ import { Subscription } from "rxjs";
 export class AdminViewComponent implements OnInit, OnDestroy {
   public interview: IInterview;
   public candidates: ICandidate[];
+  public isLoading: boolean;
   private uid: string;
   private interviewId: string;
   private interviewSubscription: Subscription;
@@ -35,6 +36,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.uid = this._afAuth.auth.currentUser.uid;
     this.interviewId = this._route.snapshot.paramMap.get("interviewId");
     // const interviewId = JSON.parse(atob(paramData));
@@ -51,6 +53,7 @@ export class AdminViewComponent implements OnInit, OnDestroy {
     this.candidatesSubscription = this._adminService.candidateChanged.subscribe(
       (candidates) => {
         this.candidates = candidates;
+        this.isLoading = false;
       }
     );
   }

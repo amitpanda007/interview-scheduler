@@ -66,6 +66,20 @@
   }
 }
 
+.deply-plus {
+  color: #ad1457;
+  font-size: x-small;
+  pointer-events: none;
+  border: 1px solid #ad1457;
+}
+
+.deply-minus {
+  color: #00e676;
+  font-size: x-small;
+  pointer-events: none;
+  border: 1px solid #00e676; 
+}
+
 #background {
   position: absolute;
   top: 0px;

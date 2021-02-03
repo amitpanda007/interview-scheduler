@@ -22,7 +22,8 @@ import {
   MatTooltipModule,
   MatCheckboxModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatSliderModule
 } from "@angular/material";
 
 import { CapitalizePipe } from "./capitalize.pipe";
@@ -56,7 +57,8 @@ import { DefaultPipe } from "./default.pipe";
     MatTooltipModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSliderModule
   ],
   declarations: [CapitalizePipe, DefaultPipe],
   providers: [MatNativeDateModule]

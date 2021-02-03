@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
   selector: "delay-dialog",
   template: `
   <mat-form-field>
-    <mat-label>Delay</mat-label>
+    <mat-label>Delay (min)</mat-label>
     <input
       required
       type="number"
@@ -14,7 +14,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
       [(ngModel)]="data.delay.time"
     />
   </mat-form-field>
-
 
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="{ delay: data.delay }">Ok</button>

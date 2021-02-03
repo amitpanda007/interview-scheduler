@@ -30,7 +30,7 @@ export class CandidateCardComponent implements OnInit {
   @Output() interviewDone = new EventEmitter<String>();
   @Output() delayChanged = new EventEmitter();
   public delayIcon: string;
-  public delayToolTip: string;
+  public delayText: string;
   public completeIcon: string;
   public percentCompleted: number = 0;
   private INCREMENT_PERCETAGE: number = 0.5;
@@ -48,13 +48,10 @@ export class CandidateCardComponent implements OnInit {
         }
       }, 1000);
     }
-
+    
     this.candidate.delay > 0
-      ? (this.delayIcon = "arrow_drop_up")
-      : (this.delayIcon = "arrow_drop_down");
-    this.candidate.delay > 0
-      ? (this.delayToolTip = `delayed by ${this.candidate.delay} min`)
-      : (this.delayToolTip = `completing early by ${this.candidate.delay} min`);
+      ? (this.delayText = `delayed by ${Math.abs(this.candidate.delay)} min`)
+      : (this.delayText = `ending early by ${Math.abs(this.candidate.delay)} min`);
   }
 
   // TODO: Update below method not to create copy of the candidate object and updat eteh current candidate
