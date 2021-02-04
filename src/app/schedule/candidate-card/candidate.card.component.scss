@@ -53,6 +53,7 @@
   box-shadow: 0 1px 20px rgb(0 0 0 / 30%);
   font-weight: bold;
   transition: background-color 5s;
+  z-index: 2;
 }
 
 .active.chip {
@@ -71,6 +72,7 @@
   font-size: x-small;
   pointer-events: none;
   border: 1px solid #ad1457;
+  z-index: 2;
 }
 
 .deply-minus {
@@ -78,6 +80,7 @@
   font-size: x-small;
   pointer-events: none;
   border: 1px solid #00e676; 
+  z-index: 2;
 }
 
 #background {
