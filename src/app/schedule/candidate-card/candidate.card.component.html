@@ -36,7 +36,7 @@
       class="btn-blue"
       aria-label="Edit Schedule"
       (click)="editCandidate(candidate)"
-      *ngIf="isAdminCard"
+      *ngIf="isAdminCard && !isLocalCard"
     >
       <mat-icon>edit</mat-icon>
     </button>
@@ -49,7 +49,33 @@
       class="btn-red"
       aria-label="Delete Schedule"
       (click)="deleteCandidate(candidate.id)"
-      *ngIf="isAdminCard"
+      *ngIf="isAdminCard && !isLocalCard"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button
+      matTooltip="edit candidate"
+      matTooltipPosition="above"
+      mat-icon-button
+      color="accent"
+      class="btn-blue"
+      aria-label="Edit Schedule"
+      (click)="editLocalCandidate(candidate)"
+      *ngIf="isAdminCard && isLocalCard"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button
+      matTooltip="delete candidate"
+      matTooltipPosition="above"
+      mat-icon-button
+      color="accent"
+      class="btn-red"
+      aria-label="Delete Schedule"
+      (click)="deleteLocalCandidate(candidate.id)"
+      *ngIf="isAdminCard && isLocalCard"
     >
       <mat-icon>delete</mat-icon>
     </button>

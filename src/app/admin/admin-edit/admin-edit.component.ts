@@ -16,6 +16,9 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { IInterview } from "../interview-card/interview";
 import { AdminService } from "../../core/services/admin.service";
 import { Subscription } from "rxjs";
+import { FileUploadDialogComponent, FileUploadDialogResult } from '../../common/file-upload.dialog.component';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: "admin-edit",
@@ -31,6 +34,9 @@ export class AdminEditComponent implements OnInit {
   private interviewId: string;
   private interviewSubscription: Subscription;
   private candidatesSubscription: Subscription;
+  private excelData: [][];
+  public isUnsavedData: boolean;
+  public localCandidates: ICandidate[];
 
   constructor(
     private _route: ActivatedRoute,
@@ -45,6 +51,7 @@ export class AdminEditComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.localCandidates = [];
     this.uid = this._afAuth.auth.currentUser.uid;
     this.interviewId = this._route.snapshot.paramMap.get("interviewId");
 
@@ -141,6 +148,10 @@ export class AdminEditComponent implements OnInit {
     this.updateFirestoreCandidate(candidate.id, candidateData, true);
   }
 
+  editLocalCandidate(data: any) {
+    console.log(data);
+  }
+
   updateFirestoreCandidate(
     candidateId: string,
     candidateData,
@@ -181,6 +192,10 @@ export class AdminEditComponent implements OnInit {
       });
   }
 
+  deleteLocalCandidate(candidateId) {
+    console.log(candidateId)
+  }
+
   addCandidate() {
     const dialogRef = this._dialog.open(CandidateCardDialogComponent, {
       width: "270px",
@@ -211,5 +226,49 @@ export class AdminEditComponent implements OnInit {
           });
       }
     });
+  }
+
+  uploadCandidate() {
+    const dialogRef = this._dialog.open(FileUploadDialogComponent, {
+      width: "370px",
+      data: {
+        candidate: {},
+      },
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result: FileUploadDialogResult) => {
+      const reader: FileReader = new FileReader();
+      reader.readAsBinaryString(result.content);
+
+      reader.onload = (e: any) => {
+        const bstr: string = e.target.result;
+        const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
+        const wsname: string = wb.SheetNames[0];
+        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+        this.excelData = (XLSX.utils.sheet_to_json(ws, {header: 1}));
+        this.showUploadedCandidate(this.excelData);
+      }
+    });
+  }
+
+  showUploadedCandidate(candidateData: Array<any>) {
+    for(let i = 1; i < candidateData.length; i++) {
+      let cand = {
+        id: this.randomString(10, true),
+        rank: candidateData[i][0],
+        name: candidateData[i][1],
+        scheduledTime: candidateData[i][2]
+      }
+      this.localCandidates.push(cand);
+    }
+  }
+
+  randomString(length: number, temp: boolean, chars: string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"): string {
+    let result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    if(temp) {
+      result = "TEMP-" + result; 
+    }
+    return result;
   }
 }

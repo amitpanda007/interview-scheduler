@@ -25,8 +25,11 @@ export class CandidateCardComponent implements OnInit {
   @Input() isUserCard: boolean = false;
   @Input() isAdminCard: boolean = false;
   @Input() isAdminLiveCard: boolean = false;
+  @Input() isLocalCard: boolean = false;
   @Output() deleteData = new EventEmitter<String>();
   @Output() editData = new EventEmitter();
+  @Output() deleteLocalData = new EventEmitter();
+  @Output() editLocalData = new EventEmitter();
   @Output() interviewDone = new EventEmitter<String>();
   @Output() delayChanged = new EventEmitter();
   public delayIcon: string;
@@ -80,6 +83,13 @@ export class CandidateCardComponent implements OnInit {
     });
   }
 
+  editLocalCandidate(candidate: ICandidate): void {
+    console.log(candidate);
+    console.log("Editing candidate");
+
+    this.editLocalData.emit(candidate);
+  }
+
   deleteCandidate(candidateId: string) {
     console.log(`Deleting candidate ${candidateId}`);
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
@@ -93,6 +103,12 @@ export class CandidateCardComponent implements OnInit {
           this.deleteData.emit(candidateId);
         }
       });
+  }
+
+  deleteLocalCandidate(candidateId: string) {
+    console.log(`Deleting local candidate ${candidateId}`);
+
+    this.deleteLocalData.emit(candidateId);
   }
 
   interviewComplete(candidate: ICandidate) {

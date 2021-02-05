@@ -21,6 +21,7 @@ Users can see their schedules with the help of Interview ID
 - ~~Tech: Security rule update in database~~
 - ~~Admin: Privacy Mode: for users to only see their names & other names should be blurred~~
 - ~~Admin: Chat Mode for users to chat~~
+- Admin: Upload excel sheet with candidate information
 - User: Show time remaining till interview start for the current user when interview is not live
 - Admin/User: Send Notification message from Admin to users
 

@@ -22,6 +22,7 @@ import { DeleteConfirmationDialogComponent } from "./common/delete.dialog.compon
 import { AuthModule } from './auth/auth.module';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { DelayDialogComponent } from './admin/card-dialog/candidate-card-delay.dialog.component';
+import { FileUploadDialogComponent } from './common/file-upload.dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DelayDialogComponent } from './admin/card-dialog/candidate-card-delay.d
     SuccessSnackbar,
     ErrorSnackbar,
     DeleteConfirmationDialogComponent,
+    FileUploadDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { DelayDialogComponent } from './admin/card-dialog/candidate-card-delay.d
     CandidateCardDialogComponent,
     InterviewCardDialogComponent,
     DeleteConfirmationDialogComponent,
-    DelayDialogComponent
+    DelayDialogComponent,
+    FileUploadDialogComponent
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
