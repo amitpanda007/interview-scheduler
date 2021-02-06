@@ -4,25 +4,26 @@ import { MatDialogRef } from "@angular/material";
 @Component({
   selector: "delete-dialog",
   template: `
-  <div class="form-group">
-    <mat-label for="file">Choose file</mat-label>
-    <input
+    <div class="form-group">
+      <mat-label for="file">Choose file</mat-label>
+      <input
         type="file"
         id="file"
-        (change)="handleFileInput($event.target.files)">
-  </div>
+        (change)="handleFileInput($event.target.files)"
+      />
+    </div>
 
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="{ content: fileToUpload }">Ok</button>
-    <button mat-button (click)="cancel()">Cancel</button>
-  </div>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="{ content: fileToUpload }">
+        Ok
+      </button>
+      <button mat-button (click)="cancel()">Cancel</button>
+    </div>
   `,
 })
 export class FileUploadDialogComponent {
   fileToUpload: File;
-  constructor(
-    public dialogRef: MatDialogRef<FileUploadDialogComponent>
-  ) {
+  constructor(public dialogRef: MatDialogRef<FileUploadDialogComponent>) {
     this.fileToUpload = null;
   }
 
@@ -34,11 +35,11 @@ export class FileUploadDialogComponent {
   }
 
   handleFileInput(files: FileList) {
-    if(files.length !== 1) throw new Error('Cannot upload multiple files.');
+    if (files.length !== 1) throw new Error("Cannot upload multiple files.");
     this.fileToUpload = files.item(0);
   }
 }
 
 export interface FileUploadDialogResult {
-  content: File
+  content: File;
 }

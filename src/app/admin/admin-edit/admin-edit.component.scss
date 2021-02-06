@@ -23,3 +23,16 @@
   top: 45%;
   left: 45%;
 }
+
+.unsaved {
+  display: inline-block;
+  background-color: #cccccc;
+  padding: 10px;
+  margin: 20px 0;
+  border: 3px dotted black;
+}
+
+.cntr {
+  display: flex;
+  justify-content: center;
+}

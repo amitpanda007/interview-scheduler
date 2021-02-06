@@ -25,7 +25,13 @@
     </div>
   </div>
 
-  <button *ngIf="candidate.delay" [ngClass]="candidate.delay > 0 ? 'deply-plus' : 'deply-minus'" mat-stroked-button>{{ delayText }}</button>
+  <button
+    *ngIf="candidate.delay"
+    [ngClass]="candidate.delay > 0 ? 'deply-plus' : 'deply-minus'"
+    mat-stroked-button
+  >
+    {{ delayText }}
+  </button>
 
   <div class="card-action">
     <button
@@ -36,7 +42,7 @@
       class="btn-blue"
       aria-label="Edit Schedule"
       (click)="editCandidate(candidate)"
-      *ngIf="isAdminCard && !isLocalCard"
+      *ngIf="isAdminCard"
     >
       <mat-icon>edit</mat-icon>
     </button>
@@ -49,33 +55,7 @@
       class="btn-red"
       aria-label="Delete Schedule"
       (click)="deleteCandidate(candidate.id)"
-      *ngIf="isAdminCard && !isLocalCard"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
-
-    <button
-      matTooltip="edit candidate"
-      matTooltipPosition="above"
-      mat-icon-button
-      color="accent"
-      class="btn-blue"
-      aria-label="Edit Schedule"
-      (click)="editLocalCandidate(candidate)"
-      *ngIf="isAdminCard && isLocalCard"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
-
-    <button
-      matTooltip="delete candidate"
-      matTooltipPosition="above"
-      mat-icon-button
-      color="accent"
-      class="btn-red"
-      aria-label="Delete Schedule"
-      (click)="deleteLocalCandidate(candidate.id)"
-      *ngIf="isAdminCard && isLocalCard"
+      *ngIf="isAdminCard"
     >
       <mat-icon>delete</mat-icon>
     </button>

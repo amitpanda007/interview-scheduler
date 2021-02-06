@@ -1,7 +1,9 @@
 <mat-card class="item">
   <div class="card-content" *ngIf="interview">
     <h3><label>Position: </label>{{ interview.name }}</h3>
-    <p><label>Date: </label>{{ interview.date.toDate() | date: 'dd/MM/yyyy' }}</p>
+    <p>
+      <label>Date: </label>{{ interview.date.toDate() | date: "dd/MM/yyyy" }}
+    </p>
     <p><label>Start Time (24 hr): </label>{{ interview.startTime }}</p>
     <p><label>Interview ID: </label>{{ interview.id }}</p>
   </div>
@@ -42,7 +44,7 @@
       <mat-icon>delete</mat-icon>
     </button>
 
-    <div class="btn-badge" *ngIf="interview.candidates">
+    <div class="btn-badge">
       <mat-icon
         matTooltip="total candidates"
         matTooltipPosition="above"
@@ -87,7 +89,7 @@
         [color]="color"
         [checked]="interview.chat"
         [disabled]="disabled"
-        >
+      >
       </mat-slide-toggle>
     </div>
     <div class="toggle-btn">
@@ -105,7 +107,7 @@
         [color]="color"
         [checked]="interview.privacy"
         [disabled]="disabled"
-        >
+      >
       </mat-slide-toggle>
     </div>
   </div>

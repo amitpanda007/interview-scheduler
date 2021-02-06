@@ -5,9 +5,7 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
-  SimpleChange,
 } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
@@ -40,6 +38,7 @@ export class InterviewCardComponent implements OnInit {
   public liveIcon: string;
   public chatIcon: string;
   public privacyIcon: string;
+  public candidateCount: number;
 
   constructor(
     private _router: Router,
@@ -55,14 +54,19 @@ export class InterviewCardComponent implements OnInit {
     this.isLive = false;
     this.color = "primary";
     this.disabled = false;
-    // this.isLive ? this.liveIcon = "play_arrow": this.liveIcon = "pause";
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.interview.currentValue) {
-      changes.interview.currentValue.live ? this.liveIcon = "play_arrow": this.liveIcon = "pause";
-      changes.interview.currentValue.chat ? this.chatIcon = "chat": this.chatIcon = "speaker_notes_off";
-      changes.interview.currentValue.privacy ? this.privacyIcon = "lock": this.privacyIcon = "lock_open";
+    if (changes.interview.currentValue) {
+      changes.interview.currentValue.live
+        ? (this.liveIcon = "play_arrow")
+        : (this.liveIcon = "pause");
+      changes.interview.currentValue.chat
+        ? (this.chatIcon = "chat")
+        : (this.chatIcon = "speaker_notes_off");
+      changes.interview.currentValue.privacy
+        ? (this.privacyIcon = "lock")
+        : (this.privacyIcon = "lock_open");
     }
   }
 

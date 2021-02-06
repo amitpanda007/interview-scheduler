@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
 import { MatDialog, MatSnackBar } from "@angular/material";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { SuccessSnackbar, ErrorSnackbar } from "../common/snackbar.component";
 import {
   InterviewCardDialogComponent,
@@ -20,13 +18,11 @@ import { IInterview } from "./interview-card/interview";
 export class AdminComponent implements OnInit, OnDestroy {
   public interviews: IInterview[];
   private interviewsSubscription: Subscription;
+  private candidateCountSubscription: Subscription;
   private _uid: string;
   public isLoading: boolean;
 
   constructor(
-    private _router: Router,
-    private _route: ActivatedRoute,
-    private _store: AngularFirestore,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _afAuth: AngularFireAuth,

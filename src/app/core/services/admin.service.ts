@@ -52,7 +52,7 @@ export class AdminService {
       });
   }
 
-  fetchCandidates(adminId: string, interviewId) {
+  fetchCandidates(adminId: string, interviewId: string) {
     this.candidateCollection = this._store
       .collection(adminId)
       .doc(interviewId)
@@ -245,25 +245,52 @@ export class AdminService {
         .doc(candidateDoc.id)
         .set(candidate);
       //Set total candidate to interview collection
-      await this._store
-        .collection(adminId)
-        .doc(interviewId)
-        .get()
-        .subscribe((interview) => {
-          const curInterview = interview.data();
-          let candidateCount;
-          curInterview.candidates
-            ? (candidateCount = curInterview.candidates + 1)
-            : (candidateCount = 1);
-          this._store
+      /*
+      Removed this to handle this on UI side
+      */
+      // await this._store
+      //   .collection(adminId)
+      //   .doc(interviewId)
+      //   .get()
+      //   .subscribe((interview) => {
+      //     const curInterview = interview.data();
+      //     let candidateCount;
+      //     curInterview.candidates
+      //       ? (candidateCount = curInterview.candidates + 1)
+      //       : (candidateCount = 1);
+      //     this._store
+      //       .collection(adminId)
+      //       .doc(interviewId)
+      //       .set({ candidates: candidateCount }, { merge: true });
+      //     this._store
+      //       .collection("interviews")
+      //       .doc(interviewId)
+      //       .set({ candidates: candidateCount }, { merge: true });
+      //   });
+    });
+  }
+
+  addBulkCandidates(
+    adminId: string,
+    interviewId: string,
+    candidates: ICandidate[]
+  ) {
+    return this._store.firestore.runTransaction(() => {
+      return Promise.all([
+        candidates.forEach(async (candidate) => {
+          const candidateDoc = await this._store
             .collection(adminId)
             .doc(interviewId)
-            .set({ candidates: candidateCount }, { merge: true });
-          this._store
+            .collection("candidates")
+            .add(candidate);
+          await this._store
             .collection("interviews")
             .doc(interviewId)
-            .set({ candidates: candidateCount }, { merge: true });
-        });
+            .collection("candidates")
+            .doc(candidateDoc.id)
+            .set(candidate);
+        }),
+      ]);
     });
   }
 
