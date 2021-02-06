@@ -54,6 +54,12 @@ export class InterviewCardComponent implements OnInit {
     this.isLive = false;
     this.color = "primary";
     this.disabled = false;
+    const count = this._adminService
+      .fetchCandidateCount(this._uid, this.interview.id)
+      .subscribe((candidates) => {
+        this.candidateCount = candidates.length;
+        console.log(this.candidateCount);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -65,6 +65,14 @@ export class AdminService {
       });
   }
 
+  fetchCandidateCount(adminId: string, interviewId: string) {
+    return this._store
+      .collection(adminId)
+      .doc(interviewId)
+      .collection("candidates")
+      .valueChanges({ idField: "id" });
+  }
+
   setCandidateCompleteStatus(
     adminId: string,
     interviewId: string,
