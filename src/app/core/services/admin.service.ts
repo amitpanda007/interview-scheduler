@@ -204,8 +204,8 @@ export class AdminService {
     interviewId: string,
     candidateDocId: string
   ) {
-    return this._store.firestore.runTransaction(async () => {
-      Promise.all([
+    return this._store.firestore.runTransaction(() => {
+      return Promise.all([
         this._store
           .collection(adminId)
           .doc(interviewId)
@@ -220,21 +220,46 @@ export class AdminService {
           .delete(),
       ]);
       //Set total candidate to interview collection
-      await this._store
-        .collection(adminId)
-        .doc(interviewId)
-        .get()
-        .subscribe((interview) => {
-          const curInterview = interview.data();
+      // await this._store
+      //   .collection(adminId)
+      //   .doc(interviewId)
+      //   .get()
+      //   .subscribe((interview) => {
+      //     const curInterview = interview.data();
+      //     this._store
+      //       .collection(adminId)
+      //       .doc(interviewId)
+      //       .set({ candidates: curInterview.candidates - 1 }, { merge: true });
+      //     this._store
+      //       .collection("interviews")
+      //       .doc(interviewId)
+      //       .set({ candidates: curInterview.candidates - 1 }, { merge: true });
+      //   });
+    });
+  }
+
+  deleteAllCandidates(
+    adminId: string,
+    interviewId: string,
+    candidateDocIds: string[]
+  ) {
+    candidateDocIds.forEach((candidateDocId) => {
+      this._store.firestore.runTransaction(() => {
+        return Promise.all([
           this._store
             .collection(adminId)
             .doc(interviewId)
-            .set({ candidates: curInterview.candidates - 1 }, { merge: true });
+            .collection("candidates")
+            .doc(candidateDocId)
+            .delete(),
           this._store
             .collection("interviews")
             .doc(interviewId)
-            .set({ candidates: curInterview.candidates - 1 }, { merge: true });
-        });
+            .collection("candidates")
+            .doc(candidateDocId)
+            .delete(),
+        ]);
+      });
     });
   }
 

@@ -294,6 +294,18 @@ export class AdminEditComponent implements OnInit {
     }
   }
 
+  deleteAllCandidates() {
+    const candidateIds: string[] = [];
+    this.candidates.forEach((candidate) => {
+      candidateIds.push(candidate.id);
+    });
+    this._adminService.deleteAllCandidates(
+      this.uid,
+      this.interviewId,
+      candidateIds
+    );
+  }
+
   addCandidate() {
     const dialogRef = this._dialog.open(CandidateCardDialogComponent, {
       width: "270px",
@@ -335,6 +347,10 @@ export class AdminEditComponent implements OnInit {
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result: FileUploadDialogResult) => {
+      if (result.content == null) {
+        console.log("Upload Modal Cancelled.");
+        return;
+      }
       const reader: FileReader = new FileReader();
       reader.readAsBinaryString(result.content);
 
