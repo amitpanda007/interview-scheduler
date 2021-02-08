@@ -94,6 +94,7 @@
       color="primary"
       (click)="deleteAllCandidates()"
       aria-label="delete all candidates"
+      *ngIf="candidates.length > 1"
     >
       <mat-icon>delete_forever</mat-icon>
     </button>
