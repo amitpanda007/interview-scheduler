@@ -314,9 +314,7 @@ export class AdminEditComponent implements OnInit {
             this.interviewId,
             candidateIds
           ).then(_ => {
-            setTimeout(_ => {
-              this.isLoading = false;
-            }, 1000);
+            this.isLoading = false;
           }); 
         }else {
           this.isLoading = false;
@@ -422,14 +420,12 @@ export class AdminEditComponent implements OnInit {
     this._adminService
       .addBulkCandidates(this.uid, this.interviewId, localCandidateData)
       .then((_) => {
-        setTimeout(_ => {
-          this.isLoading = false;
+        this.isLoading = false;
           this.isLocalDataSaved = true;
           this._snackBar.openFromComponent(SuccessSnackbar, {
             data: "All Candidates Added Successfully",
             duration: 2000,
           });
-        }, 1000);
       });
   }
 }

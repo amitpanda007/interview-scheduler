@@ -69,8 +69,7 @@ export class AdminService {
     return this._store
       .collection(adminId)
       .doc(interviewId)
-      .collection("candidates")
-      .valueChanges({ idField: "id" });
+      .collection("candidates").get();
   }
 
   setCandidateCompleteStatus(
