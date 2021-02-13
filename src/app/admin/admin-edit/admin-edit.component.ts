@@ -21,6 +21,7 @@ import {
   FileUploadDialogResult,
 } from "../../common/file-upload.dialog.component";
 import * as XLSX from "xlsx";
+import { DeleteConfirmationDialogComponent, DeleteConfirmationDialogResult } from 'src/app/common/delete.dialog.component';
 
 @Component({
   selector: "admin-edit",
@@ -49,7 +50,7 @@ export class AdminEditComponent implements OnInit {
     private _location: Location,
     private _router: Router,
     private _afAuth: AngularFireAuth,
-    private _adminService: AdminService
+    private _adminService: AdminService,
   ) {}
 
   ngOnInit() {
@@ -295,15 +296,30 @@ export class AdminEditComponent implements OnInit {
   }
 
   deleteAllCandidates() {
-    const candidateIds: string[] = [];
-    this.candidates.forEach((candidate) => {
-      candidateIds.push(candidate.id);
+    const dialogRef = this._dialog.open(DeleteConfirmationDialogComponent, {
+      width: "270px",
+      disableClose: true,
     });
-    this._adminService.deleteAllCandidates(
-      this.uid,
-      this.interviewId,
-      candidateIds
-    );
+    dialogRef
+      .afterClosed()
+      .subscribe((result: DeleteConfirmationDialogResult) => {
+        this.isLoading = true;
+        if (result.delete) {
+          const candidateIds: string[] = [];
+          this.candidates.forEach((candidate) => {
+            candidateIds.push(candidate.id);
+          });
+          this._adminService.deleteAllCandidates(
+            this.uid,
+            this.interviewId,
+            candidateIds
+          ).then(_ => {
+            this.isLoading = false;
+          }); 
+        }else {
+          this.isLoading = false;
+        }
+      });
   }
 
   addCandidate() {
@@ -405,11 +421,11 @@ export class AdminEditComponent implements OnInit {
       .addBulkCandidates(this.uid, this.interviewId, localCandidateData)
       .then((_) => {
         this.isLoading = false;
-        this.isLocalDataSaved = true;
-        this._snackBar.openFromComponent(SuccessSnackbar, {
-          data: "All Candidates Added Successfully",
-          duration: 2000,
-        });
+          this.isLocalDataSaved = true;
+          this._snackBar.openFromComponent(SuccessSnackbar, {
+            data: "All Candidates Added Successfully",
+            duration: 2000,
+          });
       });
   }
 }

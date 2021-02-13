@@ -54,10 +54,11 @@ export class InterviewCardComponent implements OnInit {
     this.isLive = false;
     this.color = "primary";
     this.disabled = false;
-    const count = this._adminService
+    this._adminService
       .fetchCandidateCount(this._uid, this.interview.id)
       .subscribe((candidates) => {
-        this.candidateCount = candidates.length;
+        const count = candidates.docs.length;
+        this.candidateCount = count;
       });
   }
 

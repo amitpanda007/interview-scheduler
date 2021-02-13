@@ -69,8 +69,7 @@ export class AdminService {
     return this._store
       .collection(adminId)
       .doc(interviewId)
-      .collection("candidates")
-      .valueChanges({ idField: "id" });
+      .collection("candidates").get();
   }
 
   setCandidateCompleteStatus(
@@ -261,6 +260,7 @@ export class AdminService {
         ]);
       });
     });
+    return Promise.resolve();
   }
 
   addCandidate(adminId: string, interviewId: string, candidate: ICandidate) {
