@@ -18,6 +18,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
   public interview: IInterview;
   public chats: IChat[];
   public isLoading: boolean;
+  public remainingTime;
   private interviewsSubscription: Subscription;
   private chatSubscription: Subscription;
 
@@ -36,6 +37,7 @@ export class InterviewComponent implements OnInit, OnDestroy {
       (interview) => {
         this.interview = interview;
         this.isLoading = false;
+        this.calculateRemainingTime();
       }
     );
 
@@ -58,6 +60,21 @@ export class InterviewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.interviewsSubscription.unsubscribe();
     this.chatSubscription.unsubscribe();
+  }
+
+  calculateRemainingTime() {
+    const todayDate = new Date();
+    const interviewDate = this.interview.date.toDate();
+
+    const diffTime = interviewDate.getTime() - todayDate.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    this.remainingTime = diffDays + " days";
+    console.log(diffDays);
+    if (diffDays == 0) {
+      this.remainingTime = "tomorrow";
+    } else if (diffDays < 0) {
+      this.remainingTime = "old interview";
+    }
   }
 
   sendChat() {

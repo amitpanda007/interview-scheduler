@@ -58,7 +58,6 @@ export class InterviewCardComponent implements OnInit {
       .fetchCandidateCount(this._uid, this.interview.id)
       .subscribe((candidates) => {
         this.candidateCount = candidates.length;
-        console.log(this.candidateCount);
       });
   }
 

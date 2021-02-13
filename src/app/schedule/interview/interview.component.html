@@ -9,6 +9,9 @@
           >Scheduled Date: {{ interview.date.toDate() | date: "dd/MM/yyyy" }},
           {{ interview.startTime }} (24 hr)</mat-card-subtitle
         >
+        <mat-card-subtitle
+          >Time till Interview: {{ remainingTime }}</mat-card-subtitle
+        >
       </mat-card-header>
       <mat-card-content>
         <div class="status">
