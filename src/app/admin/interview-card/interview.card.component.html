@@ -53,6 +53,18 @@
         >people
       </mat-icon>
     </div>
+
+    <button
+      matTooltip="share interview"
+      matTooltipPosition="above"
+      mat-icon-button
+      color="primary"
+      aria-label="Share Interview"
+      (click)="shareInterview(interview.id)"
+      class="btn-blue"
+    >
+      <mat-icon>share</mat-icon>
+    </button>
   </div>
 
   <div class="card-action-live" *ngIf="viewOnlyMode && interview">

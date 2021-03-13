@@ -144,4 +144,30 @@ export class InterviewCardComponent implements OnInit {
     };
     this.chatMode.emit(data);
   }
+
+  async shareInterview(interviewId: string) {
+    let angularNavigator: any;
+    angularNavigator = window.navigator;
+
+    const baseUrl = window.location.origin;
+    const shareData = {
+      title: "Interview URL",
+      text: "click on URL to navigate to an Interview",
+      url: `${baseUrl}/interview/${interviewId}`,
+    };
+
+    if (angularNavigator && angularNavigator.share) {
+      await angularNavigator.share(shareData).then((_) => {
+        this._snackBar.openFromComponent(SuccessSnackbar, {
+          data: "Interview shared successfully",
+          duration: 2000,
+        });
+      });
+    } else {
+      this._snackBar.openFromComponent(ErrorSnackbar, {
+        data: "Web Sharing is not supported",
+        duration: 2000,
+      });
+    }
+  }
 }
